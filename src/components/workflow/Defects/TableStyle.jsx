@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const defaultTextColor = '#2A8BF2'
+const defaultColorOp30 = 'rgba(42, 139, 242, 0.3)' 
 
-export default makeStyles((theme) => ({
+const TableStyle = theme => ({
     root: {
         height: theme.spacing(107),
         width: '100%',
@@ -14,28 +15,28 @@ export default makeStyles((theme) => ({
         },
         '& .MuiDataGrid-cell': {
             '&:focus': {
-                outline:`solid ${defaultTextColor} 1px`,
+                outline: `solid ${defaultTextColor} 1px`,
             },
             '&:focus-within': {
-                outline:`solid ${defaultTextColor} 1px`,
+                outline: `solid ${defaultTextColor} 1px`,
             },
             '& .Mui-checked': {
                 color: defaultTextColor,
             },
         },
-        '& .MuiDataGrid-colCell':{
+        '& .MuiDataGrid-colCell': {
             '&:focus': {
-                outline:`solid ${defaultTextColor} 1px`,
+                outline: `solid ${defaultTextColor} 1px`,
             },
             '& .Mui-checked': {
                 color: defaultTextColor,
             },
         },
-        '& .MuiDataGrid-root':{
+        '& .MuiDataGrid-root': {
             '& .MuiDataGrid-root': {
-              '&.Mui-checked': {
-                backgroundColor: defaultTextColor,
-            },  
+                '&.Mui-checked': {
+                    backgroundColor: defaultTextColor,
+                },
             }
         }
     },
@@ -60,5 +61,16 @@ export default makeStyles((theme) => ({
             backgroundColor: defaultTextColor,
         }
     },
+    loading: {
+        backgroundColor: `${defaultColorOp30} !important`,
+        '& .MuiLinearProgress-bar': {
+           backgroundColor: defaultTextColor, 
+        },
+        
+    },
+})
 
-}));
+const TableStyleMake = makeStyles(TableStyle)
+
+export default TableStyle
+export { TableStyleMake }

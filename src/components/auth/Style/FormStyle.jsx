@@ -1,8 +1,7 @@
-import { makeStyles } from '@material-ui/core/styles';
-
+import { makeStyles } from "@material-ui/core/styles";
 const defaultTextColor = '#2A8BF2'
 
-export default makeStyles((theme) => ({
+const FormStyle = theme => ({
     root: {
         minWidth: 275,
         maxWidth: 350,
@@ -101,9 +100,6 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
 
-    },
-    menuOption:{
-        color: defaultTextColor,
     },
     avatar: {
         margin: theme.spacing(1),
@@ -212,6 +208,7 @@ export default makeStyles((theme) => ({
     description: {
         textTransform: 'none',
         textOverflow: 'ellipsis',
+        textAlign: 'unset',
         '& .MuiButton-label': {
             fontSize: 12.5,
             width: 320,
@@ -320,5 +317,9 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: theme.spacing(107),
     }
-}));
+});
 
+const FormStyleMake = makeStyles(FormStyle)
+
+export default FormStyle
+export { FormStyleMake }

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import DataTable from '../../components/workflow/AdminUsers/DataTable/DataTable'
+import AdminsTable from '../../components/workflow/AdminUsers/DataTable/AdminsTable'
 
 import WorkflowStyle from "../../components/workflow/WorkflowStyle";
 import Paper from '@material-ui/core/Paper';
@@ -30,7 +30,7 @@ function AdminUsers(props) {
     return (
         <Paper className={classes.paper}>
             <strong>Admin Users</strong>
-            <DataTable data={data} />
+            <AdminsTable data={data} />
         </Paper>
     )
 }

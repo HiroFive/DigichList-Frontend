@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
     DataGrid,
 } from '@material-ui/data-grid';
-import TableStyle from '../../Defects/TableStyle'
+import {TableStyleMake} from '../../Defects/TableStyle'
 
 
 import TableTools from './TableTools';
@@ -44,7 +44,7 @@ const columns = [
 
 
 export default function AdminUsersTable(props) {
-    const classes = TableStyle()
+    const classes = TableStyleMake()
     const rows = props.data
     const [selectionModel, setSelectionModel] = React.useState([]);
     const [page, setPage] = React.useState(0);

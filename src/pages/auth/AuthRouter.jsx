@@ -8,8 +8,7 @@ import '../../styles/auth/auth.scss';
 
 
 export default function Auth() {
-    const history = useLocation();
-    console.log(history.pathname)
+    // const history = useLocation();
     return (
         <Switch>
             <Route exact path="/auth/login" component={Login}/>

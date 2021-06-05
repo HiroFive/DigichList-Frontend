@@ -6,13 +6,13 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 
-import FormStyle from '../../../components/auth/FormStyle';
+import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 const EditAdmin = (props) => {
-    const styles = FormStyle()
+    const styles = FormStyleMake()
     return (<div>
         { props.data.length < 2 && props.data.length !== 0 ? (
             <Formik

@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios';
 
 import RequestTable from '../../components/workflow/EmployersUsers/RequestTable'
-import EmployersData from '../../components/workflow/EmployersUsers/EmployersData'
+import EmployersTable from '../../components/workflow/EmployersUsers/EmployersTable'
 
 import WorkflowStyle from "../../components/workflow/WorkflowStyle";
 import { withStyles } from "@material-ui/core/styles";
@@ -143,14 +143,6 @@ class WorkerUsers extends React.Component {
             data: []
         }
     }
-    componentDidMount() {
-        axios.get(`https://cors-anywhere.herokuapp.com/https://digichlistbackend.herokuapp.com/api/users`)
-            .then(res => {
-                const persons = res.data;
-                console.log(persons)
-                this.setState({ data: persons})
-            })
-    }
     render() {
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
@@ -159,7 +151,7 @@ class WorkerUsers extends React.Component {
                 <Grid item xs={12} md={8} lg={7}>
                     <Paper className={fixedHeightPaper}>
                         <strong>Employers Users</strong>
-                        <EmployersData data={this.state.data} />
+                        <EmployersTable/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4} lg={5}>

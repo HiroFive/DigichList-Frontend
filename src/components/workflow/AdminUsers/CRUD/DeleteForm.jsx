@@ -6,11 +6,11 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import FormStyle from '../../../components/auth/FormStyle';
+import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
 
 const DeleteForm = (props) => {
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     const handleSubmit = () => {
         console.log(props.data);
     }

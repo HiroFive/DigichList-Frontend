@@ -10,10 +10,11 @@ function App() {
     <Router>
       <Switch>
         <Route path='/workflow' component={WorkflowRouter} />
-        <Route path="/auth" component={AuthRouter}/>
-        <Route path="/not-found" component={Error404}/>
-        <Redirect to="/not-found"/>
+        <Route path="/auth" component={AuthRouter} />
+        <Route path="/not-found" component={Error404} />
+        <Redirect to="/not-found" />
       </Switch>
+
     </Router>
   );
 }

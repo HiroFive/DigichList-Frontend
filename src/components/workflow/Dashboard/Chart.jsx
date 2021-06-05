@@ -51,9 +51,9 @@ const data = [
 
 
 export default class ShowChart extends PureComponent {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state= {
+    this.state = {
       data: data,
     }
   }
@@ -62,13 +62,14 @@ export default class ShowChart extends PureComponent {
     return (
       <ResponsiveContainer className="chart-container">
         <LineChart
+          className="chartSize"
           width={500}
-          height={300}
+        
           data={this.state.data}
           margin={{
             top: 10,
-            right: 30,
-            left: 0,
+            right: 20,
+            left: -10,
             bottom: 5,
           }}
         >
