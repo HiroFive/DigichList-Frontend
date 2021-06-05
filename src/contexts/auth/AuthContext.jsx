@@ -15,10 +15,11 @@ async function login(email, password) {
             password
         })
     })
-    // const CurrentUser = await fetch('https://digichlistbackend.herokuapp.com/admin', {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     credentials: 'include',
-    // })
+    const CurrentUser = await fetch('https://digichlistbackend.herokuapp.com/admin', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+    })
     // if (!CurrentUser) {
     //     await fetch('https://digichlistbackend.herokuapp.com/login', {
     //         method: 'POST',
