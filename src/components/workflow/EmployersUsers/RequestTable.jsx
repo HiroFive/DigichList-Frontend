@@ -8,6 +8,58 @@ import FormStyle from '../../auth/FormStyle';
 
 import AcceptModal from './Modal'
 
+function RequestAction(props) {
+    const { context } = props;
+    const classes = FormStyle()
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleDeny = (e) => {
+        e.preventDefault();
+        console.log(context.row)
+    }
+
+    return (
+        <div>
+            {open ? <AcceptModal open={open} handleClose={handleClose} context={context.row} />
+                : null
+            }
+            <form onSubmit={handleDeny}>
+                <ButtonGroup disableElevation variant="contained" color="primary">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        className={classes.submitBtn}
+                        style={{ marginLeft: 16 }}
+                        onClick={handleOpen}
+                    >
+                        Accept
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        size="small"
+                        className={`${classes.submitBtn} ${classes.cancelBtn}`}>
+                        Deny
+                    </Button>
+                </ButtonGroup>
+            </form>
+
+        </div>
+
+    )
+}
+RequestAction.propTypes = {
+    context: PropTypes.object,
+}
+
 const columns = [
     {
         field: 'id',
@@ -34,56 +86,7 @@ const columns = [
         headerName: 'Action',
         width: 160,
         // eslint-disable-next-line react/display-name
-        renderCell: (params) => {
-            const context = params.row
-            const classes = FormStyle()
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const [open, setOpen] = React.useState(false);
-
-            const handleOpen = () => {
-                setOpen(true);
-            };
-
-            const handleClose = () => {
-                setOpen(false);
-            };
-            const handleDeny = (e) => {
-                e.preventDefault();
-                console.log(context)
-            }
-
-            return (
-                <div>
-                    {open ? <AcceptModal open={open} handleClose={handleClose} context={context} />
-                        : null
-                    }
-                    <form onSubmit={handleDeny}>
-                        <ButtonGroup disableElevation variant="contained" color="primary">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                className={classes.submitBtn}
-                                style={{ marginLeft: 16 }}
-                                onClick={handleOpen}
-                            >
-                                Accept
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                type="submit"
-                                size="small"
-                                className={`${classes.submitBtn} ${classes.cancelBtn}`}>
-                                Deny
-                            </Button>
-                        </ButtonGroup>
-                    </form>
-
-                </div>
-
-            )
-        }
+        renderCell: (params) => (<RequestAction context={params} />)
     },
 
 ];

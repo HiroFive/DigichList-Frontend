@@ -46,12 +46,13 @@ export default class Example extends PureComponent {
     return (
       <ResponsiveContainer className="chart-container">
         <BarChart
+          className="chartSize"
           width={500}
           height={300}
           data={data}
           margin={{
             top: 5,
-            right: 30,
+            right: 20,
             left: -15,
             bottom: 5,
           }}

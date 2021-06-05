@@ -17,6 +17,56 @@ import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 
+function RegisterMenu(props) {
+    RegisterMenu.propTypes = {
+        params: PropTypes.object,
+    }
+    const { params } = props
+    const classes = FormStyleMake()
+    const [selectedIndex, setSelectedIndex] = React.useState(params.value);
+    const options = [
+        'Set No',
+        'Set Yes',
+    ];
+    return (
+        <div className={classes.rootClip}>
+            <PopupState variant="popover" popupId="demo-popup-menu">
+                {(popupState) => {
+                    const closeMenu = (event, index) => {
+                        setSelectedIndex(index);
+                        popupState.close();
+                    }
+                    return (
+                        <React.Fragment>
+                            {selectedIndex == true ? (
+                                <Button aria-controls="fade-menu" aria-haspopup="true" {...bindTrigger(popupState)}>
+                                    <Chip className={classes.allowed} variant="outlined" size="small" label="Yes" icon={<DoneIcon />} />
+                                </Button>
+                            ) : (
+                                <Button aria-controls="fade-menu" aria-haspopup="true" {...bindTrigger(popupState)}>
+                                    <Chip className={classes.forbidden} variant="outlined" size="small" label="No" icon={<CloseIcon />} />
+                                </Button>
+                            )
+                            }
+                            <Menu className={classes.regMenu} {...bindMenu(popupState)}>
+                                {options.map((option, index) => (
+                                    <MenuItem
+                                        key={option}
+                                        disabled={index === Number(selectedIndex)}
+                                        onClick={(event) => closeMenu(event, index)}
+                                    >
+                                        {option}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </React.Fragment>
+                    )
+                }}
+            </PopupState>
+        </div>)
+}
+
+
 
 const columns = [
     {
@@ -44,54 +94,8 @@ const columns = [
         headerName: 'Registered',
         width: 125,
         // eslint-disable-next-line react/display-name
-        renderCell: (params) => {
-            const paramValue = params.value;
-            const classes = FormStyleMake()
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const [selectedIndex, setSelectedIndex] = React.useState(paramValue);
-            const options = [
-                'Set No',
-                'Set Yes',
-            ];
-            return (
-                <div className={classes.rootClip}>
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                        {(popupState) => {
-                            const closeMenu = (event, index) => {
-                                setSelectedIndex(index);
-                                popupState.close();
-                            }
-                            return (
-                                <React.Fragment>
-                                    {selectedIndex == true ? (
-                                        <Button aria-controls="fade-menu" aria-haspopup="true" {...bindTrigger(popupState)}>
-                                            <Chip className={classes.allowed} variant="outlined" size="small" label="Yes" icon={<DoneIcon />} />
-                                        </Button>
-                                    ) : (
-                                        <Button aria-controls="fade-menu" aria-haspopup="true" {...bindTrigger(popupState)}>
-                                            <Chip className={classes.forbidden} variant="outlined" size="small" label="No" icon={<CloseIcon />} />
-                                        </Button>
-                                    )
-                                    }
-                                    <Menu className={classes.regMenu} {...bindMenu(popupState)}>
-                                        {options.map((option, index) => (
-                                            <MenuItem
-                                                key={option}
-                                                disabled={index === Number(selectedIndex)}
-                                                onClick={(event) => closeMenu(event, index)}
-                                            >
-                                                {option}
-                                            </MenuItem>
-                                        ))}
-                                    </Menu>
-                                </React.Fragment>
-                            )
-                        }}
-                    </PopupState>
-                </div>)
-        }
-    },
-
+        renderCell: (params) => (<RegisterMenu params={params} />)
+    }
 ];
 class RenderCellGrid extends React.Component {
     constructor(props) {
@@ -109,7 +113,7 @@ class RenderCellGrid extends React.Component {
             .then(res => {
                 const persons = res.data;
                 this.setState({ rows: persons })
-                this.setState({loading: false})
+                this.setState({ loading: false })
             })
     }
     componentWillUnMount() {

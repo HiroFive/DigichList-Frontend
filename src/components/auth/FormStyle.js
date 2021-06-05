@@ -102,6 +102,9 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
 
     },
+    menuOption:{
+        color: defaultTextColor,
+    },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: '#0d6efd !important',

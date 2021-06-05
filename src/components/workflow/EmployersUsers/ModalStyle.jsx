@@ -5,6 +5,26 @@ export default makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        '& .MuiSvgIcon-root': {
+            fontSize: 28,
+        },
+        '& .MuiFormLabel-root': {
+            '&.Mui-focused': {
+                color: '#0d6efd',
+            }
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'rgb(206, 212, 218)',
+                borderWidth: 1.5,
+            },
+            '&:hover fieldset': {
+                borderColor: 'rgb(134, 183, 254)',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'rgb(134, 183, 254)',
+            },
+        },
     },
     paper: {
         backgroundColor: theme.palette.background.paper,

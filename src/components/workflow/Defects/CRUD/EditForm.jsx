@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 
+
 import FiberManualRecordRoundedIcon from '@material-ui/icons/FiberManualRecordRounded';
 import ErrorRoundedIcon from '@material-ui/icons/ErrorRounded';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
@@ -25,13 +26,28 @@ import * as Yup from "yup";
 const EditForm = (props) => {
     const { data } = props;
     const classes = FormStyle()
+    const menuItems = [
+        {
+            value: 'Open',
+            label: 'Open',
+        },
+        {
+            value: 'Fixing',
+            label: 'Fixing',
+        },
+        {
+            value: 'Solved',
+            label: 'Solved',
+        }
+    ]
+    console.log(data)
     return (
         <>
             { data.length < 2 ? (
                 < Formik
                     initialValues={{
                         roomNumber: data[0].roomNumber,
-                        state: data[0].state,
+                        state: `${data[0].state}`,
                         publisher: data[0].publisher,
                         openDate: new Date(),
                         closeDate: '',
@@ -101,13 +117,18 @@ const EditForm = (props) => {
                                                 <InputLabel id="demo-simple-select-outlined-label">State</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-outlined-label"
-                                                    {...formik.getFieldProps('state')}
-
                                                     label="State"
+                                                    {...formik.getFieldProps('state')}
                                                 >
-                                                    <MenuItem value={'Open'}><Chip variant="outlined" size="small" label="Open" className={classes.opened} icon={<ErrorRoundedIcon />} /></MenuItem>
-                                                    <MenuItem value={'Solved'}><Chip className={classes.allowed} variant="outlined" size="small" label="Solved" icon={<CheckCircleRoundedIcon />} /></MenuItem>
-                                                    <MenuItem value={'Fixing'}><Chip variant="outlined" size="small" label="Fixing" className={classes.fixing} icon={<FiberManualRecordRoundedIcon />} /></MenuItem>
+                                                    {menuItems.map((params, index) => {
+                                                        const { value } = params
+                                                        return (
+                                                            <MenuItem key={index} value={value}>
+                                                                {value}
+                                                            </MenuItem >
+                                                        )
+                                                    })}
+
                                                 </Select>
                                             </FormControl>
 
