@@ -68,6 +68,10 @@ const TableStyle = theme => ({
         },
         
     },
+    fixedHeightTable: {
+        width: '100%',
+        height: theme.spacing(107),
+    }
 })
 
 const TableStyleMake = makeStyles(TableStyle)

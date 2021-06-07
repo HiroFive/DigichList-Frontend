@@ -316,7 +316,11 @@ const FormStyle = theme => ({
     fixedHeightTable: {
         width: '100%',
         height: theme.spacing(107),
-    }
+    },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+    },
 });
 
 const FormStyleMake = makeStyles(FormStyle)

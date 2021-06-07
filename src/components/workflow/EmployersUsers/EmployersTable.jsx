@@ -6,16 +6,19 @@ import Button from '@material-ui/core/Button';
 import { DataGrid } from '@material-ui/data-grid';
 import Chip from '@material-ui/core/Chip';
 import FormStyle, { FormStyleMake } from '../../auth/Style/FormStyle';
+import TableStyle from '../Defects/TableStyle'
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { LoadingOverlay } from '../TableComponents/Overlay'
+import TableTools from './EmployersToolBar';
 
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { withStyles } from "@material-ui/core/styles";
 
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
+
 
 function RegisterMenu(props) {
     RegisterMenu.propTypes = {
@@ -125,22 +128,25 @@ class RenderCellGrid extends React.Component {
         return (
             <div className={classes.fixedHeightTable}>
                 <DataGrid
-                    className={classes.dataGrid}
+                    className={classes.dataTable}
                     rows={this.state.rows}
                     columns={columns}
                     onPageChange={(params) => {
                         this.setState({ page: params });
                     }}
                     components={{
+                        Toolbar: ((event) => TableTools(this.state.rows, this.state.selectionModel)),
                         LoadingOverlay: LoadingOverlay,
                     }}
                     pageSize={14}
                     page={this.state.page}
                     loading={this.state.loading}
+                    checkboxSelection
                     pagination
                     onSelectionModelChange={(newSelection) => {
                         this.setState({ selectionModel: newSelection.selectionModel });
                     }}
+                    disableSelectionOnClick
                     selectionModel={this.state.selectionModel}
                 />
             </div>
@@ -152,4 +158,4 @@ RenderCellGrid.propTypes = {
     classes: PropTypes.object,
 };
 
-export default withStyles(FormStyle, { withTheme: true })(RenderCellGrid)
+export default withStyles(TableStyle, { withTheme: true })(RenderCellGrid)

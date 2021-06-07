@@ -6,14 +6,14 @@ import Defects from './Defects'
 import EmployersUsers from './EmployersUsers'
 // import Error404 from '../Error/404page'
 import { Route, Switch, Redirect } from 'react-router-dom';
-
+import PrivateRoute from '../../components/auth/PrivateRoute';
 
 export default function WorkflowRouter() {
     return (
             <SideMenu
                 body={
                     <Switch>
-                        <Route exact path="/workflow/dashboard" component={Dashboard} />
+                        <PrivateRoute exact path="/workflow/dashboard" component={Dashboard} />
                         <Route exact path="/workflow/admin-users" component={AdminUsers} />
                         <Route exact path="/workflow/defects" component={Defects} />
                         <Route exact path="/workflow/employers-users" component={EmployersUsers} />
