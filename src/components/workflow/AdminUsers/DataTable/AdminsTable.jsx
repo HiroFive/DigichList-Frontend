@@ -49,7 +49,7 @@ export default function AdminUsersTable(props) {
     const [selectionModel, setSelectionModel] = React.useState([]);
     const [page, setPage] = React.useState(0);
     return (
-        <div className={classes.root}>
+        <div className={classes.fixedHeightFullSize}>
             <DataGrid
                 className={classes.dataTable}
                 rows={rows}

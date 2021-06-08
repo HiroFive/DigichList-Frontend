@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import axios from 'axios';
-
 import RequestTable from '../../components/workflow/EmployersUsers/RequestTable'
 import EmployersTable from '../../components/workflow/EmployersUsers/EmployersTable'
 

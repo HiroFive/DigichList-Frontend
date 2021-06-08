@@ -4,17 +4,17 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import WorkflowRouter from './pages/workflow/WorkflowRouter';
 import AuthRouter from './pages/auth/AuthRouter';
 import Error404 from './pages/Error/404page';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/workflow' component={WorkflowRouter} />
+      <Switch>    
+        <Redirect path='/' to='/auth' exact />
+        <PrivateRoute path='/workflow' component={WorkflowRouter} />
         <Route path="/auth" component={AuthRouter} />
-        <Route path="/not-found" component={Error404} />
-        <Redirect to="/not-found" />
+        <Route path='*' component={Error404} />
       </Switch>
-
     </Router>
   );
 }

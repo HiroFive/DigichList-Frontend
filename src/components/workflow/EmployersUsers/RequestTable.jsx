@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { DataGrid } from '@material-ui/data-grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import FormStyle from '../../auth/FormStyle';
+import {FormStyleMake} from '../../auth/Style/FormStyle';
 
 import AcceptModal from './Modal'
 
 function RequestAction(props) {
     const { context } = props;
-    const classes = FormStyle()
+    const classes = FormStyleMake()
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -93,7 +93,7 @@ const columns = [
 
 export default function RenderCellGrid(props) {
     const rows = props.data
-    const classes = FormStyle()
+    const classes = FormStyleMake()
     const [selectionModel, setSelectionModel] = React.useState([]);
     const [page, setPage] = React.useState(0);
     return (

@@ -10,12 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-
-
-import FiberManualRecordRoundedIcon from '@material-ui/icons/FiberManualRecordRounded';
-import ErrorRoundedIcon from '@material-ui/icons/ErrorRounded';
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 
 import FormStyle from '../../../auth/FormStyle';
 
