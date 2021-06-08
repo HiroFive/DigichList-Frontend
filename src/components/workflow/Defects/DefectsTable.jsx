@@ -133,7 +133,7 @@ class DefectsTable extends React.Component {
     render() {
         const { classes } = this.props
         return (
-            <div className={classes.root}>
+            <div className={classes.fixedHeightFullSize}>
                 <DataGrid
                     className={classes.dataTable}
                     rows={this.state.rows}

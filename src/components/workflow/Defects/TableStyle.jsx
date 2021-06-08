@@ -71,7 +71,17 @@ const TableStyle = theme => ({
     fixedHeightTable: {
         width: '100%',
         height: theme.spacing(107),
-    }
+        [theme.breakpoints.down('xs')]: {
+            height: theme.spacing(55),
+        }
+    },
+    fixedHeightFullSize: {
+        width: '100%',
+        height: theme.spacing(107),
+        [theme.breakpoints.down('xs')]: {
+            height: theme.spacing(88),
+        }
+    },
 })
 
 const TableStyleMake = makeStyles(TableStyle)
