@@ -39,8 +39,9 @@ const useAuth = () => useContext(AuthContext);
 // }
 // export { login }
 
-const AuthProvider = props => {
+const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const login = async (email, password) => {
         try {
@@ -57,26 +58,42 @@ const AuthProvider = props => {
             setCurrentUser(response.ok)
             return response
         } catch (error) {
-            return {error: error}
+            return { error: error }
         }
-
     }
 
-    // useEffect(() => {
-    //     fetch('https://digichlistbackend.herokuapp.com/admin', {
-    //         method: 'GET',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         credentials: 'include',
-    //     }).then(
-    //         response => console.log(response.json)
-    //     )
-    // }, [])
+    const logout = async() => {
+        var response = {}
+        await fetch('https://digichlistbackend.herokuapp.com/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        }).then(props => response = props)
+        setCurrentUser(!response.ok)
+        console.log(!response.ok)
+    }
+
+    useEffect(() => {
+        fetch('https://digichlistbackend.herokuapp.com/admin', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        }).then(
+            res => {
+                setCurrentUser(res.ok)
+                setLoading(false)
+            }
+        )
+    }, [currentUser])
 
     const authContextValue = {
         currentUser,
         login,
+        logout,
     }
-    return <AuthContext.Provider value={authContextValue} {...props} />
+    return <AuthContext.Provider value={authContextValue}>
+        {!loading && children}
+    </AuthContext.Provider>
 }
 
 export { AuthProvider, useAuth }

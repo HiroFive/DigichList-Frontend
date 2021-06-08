@@ -5,7 +5,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { DataGrid } from '@material-ui/data-grid';
 import Chip from '@material-ui/core/Chip';
-import FormStyle, { FormStyleMake } from '../../auth/Style/FormStyle';
+import { FormStyleMake } from '../../auth/Style/FormStyle';
 import TableStyle from '../Defects/TableStyle'
 
 import Menu from '@material-ui/core/Menu';
