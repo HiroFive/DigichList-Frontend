@@ -121,8 +121,8 @@ class DefectsTable extends React.Component {
         this._isMounted = true;
         axios.get(`https://digichlistbackend.herokuapp.com/api/defect`)
             .then(res => {
-                const persons = res.data;
-                this.setState({ rows: persons })
+                const defect = res.data;
+                this.setState({ rows: defect })
                 this.setState({ loading: false })
             })
     }

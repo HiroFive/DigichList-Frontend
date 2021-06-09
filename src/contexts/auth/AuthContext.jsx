@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-import { EmailJSResponseStatus } from 'emailjs-com';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
 
 const AuthContext = createContext({})
 
@@ -48,11 +46,14 @@ const AuthProvider = ({ children }) => {
             var response = {}
             await fetch('https://digichlistbackend.herokuapp.com/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 credentials: 'include',
                 body: JSON.stringify({
-                    email,
-                    password
+                    email: email,
+                    password: password
                 })
             }).then(props => response = props)
             setCurrentUser(response.ok)
@@ -62,13 +63,17 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    const logout = async() => {
+    const logout = async () => {
         var response = {}
         await fetch('https://digichlistbackend.herokuapp.com/logout', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             credentials: 'include',
         }).then(props => response = props)
+
         setCurrentUser(!response.ok)
         console.log(!response.ok)
     }
@@ -76,7 +81,10 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         fetch('https://digichlistbackend.herokuapp.com/admin', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             credentials: 'include',
         }).then(
             res => {
