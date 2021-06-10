@@ -11,7 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 
-import FormStyle from '../../../auth/FormStyle';
+import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
 import { DropzoneArea } from 'material-ui-dropzone'
 import { Formik } from "formik";
@@ -19,11 +19,11 @@ import * as Yup from "yup";
 
 const EditForm = (props) => {
     const { data } = props;
-    const classes = FormStyle()
+    const classes = FormStyleMake()
     const menuItems = [
         {
-            value: 'Open',
-            label: 'Open',
+            value: 'Opened',
+            label: 'Opened',
         },
         {
             value: 'Fixing',
@@ -34,20 +34,19 @@ const EditForm = (props) => {
             label: 'Solved',
         }
     ]
-    console.log(data)
     return (
         <>
             { data.length < 2 ? (
                 < Formik
                     initialValues={{
                         roomNumber: data[0].roomNumber,
-                        state: `${data[0].state}`,
+                        defectStatus: data[0].defectStatus,
                         publisher: data[0].publisher,
-                        openDate: new Date(),
+                        openDate: data[0].createdAt,
                         closeDate: '',
                         image: [],
                         description: data[0].description,
-                        assignedDefect: `${data[0].assignedDefect}`,
+                        userThatFixesDefect: data[0].userThatFixesDefect,
                     }}
                     validationSchema={
                         Yup.object().shape({
@@ -58,7 +57,9 @@ const EditForm = (props) => {
                                 .required('Required'),
                             image: Yup.array()
                                 .min(1, 'is required!'),
-                            assignedDefect: Yup.string()
+                            defectStatus: Yup.string()
+                                .required('Required'),
+                            userThatFixesDefect: Yup.string()
                                 .min(5, 'Too Short!')
                                 .max(20, 'Too Long!')
                                 .required('Required'),
@@ -108,11 +109,11 @@ const EditForm = (props) => {
                                                 size="small"
                                                 fullWidth
                                                 className={classes.formControl}>
-                                                <InputLabel id="demo-simple-select-outlined-label">State</InputLabel>
+                                                <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-outlined-label"
-                                                    label="State"
-                                                    {...formik.getFieldProps('state')}
+                                                    label="defectStatus"
+                                                    {...formik.getFieldProps('defectStatus')}
                                                 >
                                                     {menuItems.map((params, index) => {
                                                         const { value } = params
@@ -127,12 +128,12 @@ const EditForm = (props) => {
                                             </FormControl>
 
                                             <TextField
-                                                error={formik.errors.assignedDefect == 'Required'}
+                                                error={formik.errors.userThatFixesDefect == 'Required'}
                                                 className={classes.formInput}
-                                                id="assignedDefect"
-                                                label="Assigned Defect"
-                                                helperText={formik.errors.assignedDefect}
-                                                {...formik.getFieldProps('assignedDefect')}
+                                                id="userThatFixesDefect"
+                                                label="Fixes defect"
+                                                helperText={formik.errors.userThatFixesDefect}
+                                                {...formik.getFieldProps('userThatFixesDefect')}
                                                 margin="normal"
                                                 size="small"
                                                 fullWidth

@@ -331,6 +331,10 @@ const FormStyle = theme => ({
         color: 'red',
         textAlign: 'center',
     },
+    smallButton: {
+        width: 150,
+        color: defaultTextColor
+    }
 });
 
 const FormStyleMake = makeStyles(FormStyle)

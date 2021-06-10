@@ -1,8 +1,14 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
-import { GroupingState, IntegratedGrouping } from '@devexpress/dx-react-grid';
-import { Grid, VirtualTable, TableHeaderRow, TableGroupRow, TableColumnResizing } from '@devexpress/dx-react-grid-material-ui';
+import { GroupingState, IntegratedGrouping } from "@devexpress/dx-react-grid";
+import {
+  Grid,
+  VirtualTable,
+  TableHeaderRow,
+  TableGroupRow,
+  TableColumnResizing,
+} from "@devexpress/dx-react-grid-material-ui";
 import "../../../styles/workflow/dashboard.scss";
 
 // const data = [
@@ -80,58 +86,52 @@ import "../../../styles/workflow/dashboard.scss";
 
 export default class RequestTable extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       rows: [],
       columns: [
-        { name: 'id', title: '#id' },
-        { name: 'description', title: 'Description' },
-        { name: 'roomNumber', title: 'Room Number' },
-        { name: 'state', title: 'State' },
-        { name: 'publisher', title: 'Publisher' },
+        { name: "id", title: "#id" },
+        { name: "description", title: "Description" },
+        { name: "roomNumber", title: "Room Number" },
+        { name: "defectStatus", title: "Status" },
+        { name: "publisher", title: "Publisher" },
       ],
       defaultColumnWidths: [
-        { columnName: 'id', width: 80 },
-        { columnName: 'description', width: 340 },
-        { columnName: 'roomNumber', width: 150 },
-        { columnName: 'state', width: 100 },
-        { columnName: 'publisher', width: 200 },
+        { columnName: "id", width: 80 },
+        { columnName: "description", width: 340 },
+        { columnName: "roomNumber", width: 150 },
+        { columnName: "defectStatus", width: 100 },
+        { columnName: "publisher", width: 200 },
       ],
-      loading: true
-    }
+      loading: true,
+    };
   }
   componentDidMount() {
     this._isMounted = true;
-    axios.get(`https://digichlistbackend.herokuapp.com/api/defect`)
-      .then(res => {
-        const defect = res.data;
-        this.setState({ rows: defect })
-        this.setState({ loading: false })
-        // console.log(this.state.rows)
-      })
+    axios.get(`https://localhost:44379/api/defect`).then((res) => {
+      const defect = res.data;
+      this.setState({ rows: defect });
+      this.setState({ loading: false });
+    });
   }
   componentWillUnMount() {
     this._isMounted = false;
   }
-  
+
   render() {
     return (
-      <div className='request-table'>
-        <Grid
-          rows={this.state.rows}
-          columns={this.state.columns}
-        >
-          <GroupingState
-            grouping={[{ columnName: 'state' }]}
-          />
+      <div className="request-table">
+        <Grid rows={this.state.rows} columns={this.state.columns}>
+          <GroupingState grouping={[{ columnName: "defectStatus" }]} />
           <IntegratedGrouping />
-          <VirtualTable height='325px' />
-          <TableColumnResizing defaultColumnWidths={this.state.defaultColumnWidths} />
+          <VirtualTable height="325px" />
+          <TableColumnResizing
+            defaultColumnWidths={this.state.defaultColumnWidths}
+          />
           <TableHeaderRow />
           <TableGroupRow />
         </Grid>
       </div>
-
-    )
+    );
   }
 }

@@ -88,7 +88,7 @@ const columns = [
         width: 145,
     },
     {
-        field: 'role',
+        field: 'roleName',
         headerName: 'Role',
         width: 180,
     },
@@ -112,12 +112,13 @@ class RenderCellGrid extends React.Component {
     }
     componentDidMount() {
         this._isMounted = true;
-        axios.get(`https://digichlistbackend.herokuapp.com/api/users`)
+        axios.get(`https://localhost:44379/api/users`)
             .then(res => {
                 const persons = res.data;
                 this.setState({ rows: persons })
                 this.setState({ loading: false })
             })
+        
     }
     componentWillUnMount() {
         this._isMounted = false;
@@ -125,6 +126,7 @@ class RenderCellGrid extends React.Component {
 
     render() {
         const { classes } = this.props
+        console.log(this.state.rows)
         return (
             <div className={classes.fixedHeightTable}>
                 <DataGrid
