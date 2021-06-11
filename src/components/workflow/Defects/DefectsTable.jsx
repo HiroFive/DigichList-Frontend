@@ -21,6 +21,7 @@ import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import TableTools from './TableToolBar';
 import DescriptionModal from './DescriptionModal';
 import SetTechnician from './CRUD/SetTechnician';
+import CustomDialog from '../Dialog/Dialog';
 
 function RenderDescription(props) {
     RenderDescription.propTypes = {
@@ -67,7 +68,7 @@ function RenderFixesDefect(props) {
     };
     return (
         <div>
-            {open ? <DescriptionModal open={open} component={<SetTechnician data={props.value.row} />} title={'Set Technician'} handleClose={handleClose} context={props.value.row} />
+            {open ? <CustomDialog title={'Set Technician'} form={<SetTechnician data={props.value.row} setOpenState={setOpen} />} open={open} setOpenState={setOpen} />
                 : null
             }
             {paramValue == null ? (

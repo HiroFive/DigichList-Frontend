@@ -34,7 +34,6 @@ const FormStyle = theme => ({
     form: {
         maxWidth: 450,
         minWidth: 280,
-        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',

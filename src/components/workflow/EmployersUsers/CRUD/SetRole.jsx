@@ -21,15 +21,16 @@ class SetTechnician extends React.Component {
         super(props);
         this.state = {
             menuItems: [],
-            defectId: props.data.id,
-            SelectedTechnician: ''
+            idSelectedRole: '',
+            userId: props.data.id,
+            SelectedRole: ''
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     async componentDidMount() {
         this._isMounted = true;
-        await fetch('https://localhost:44379/api/users/GetTechnicians', {
+        await fetch('https://localhost:44379/api/roles', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,31 +39,27 @@ class SetTechnician extends React.Component {
         })
             .then(response => response.json())
 
-            .then(reqResponse => this.setState({
-                menuItems: reqResponse.map((params) => {
-                    var newObject = {
-                        id: params.id,
-                        fullName: `${params.firstName} ${params.lastName}`,
-                        firstName: params.firstName,
-                        lastName: params.lastName,
-                    }
-                    return newObject
-                })
-            })
-            )
+            .then(reqResponse => this.setState({menuItems: reqResponse}))
     }
     componentWillUnMount() {
         this._isMounted = false;
     }
-    handleChange(event, newValue) {
-        this.setState({ SelectedTechnician: newValue })
+    handleChange(event) {
+        event.stopPropagation();
+        this.setState({ idSelectedRole: event.target.value })
     }
     async handleSubmit(event) {
         event.preventDefault();
-        if (this.state.SelectedTechnician == '') {
-            this.props.setOpenState(false)
+        if (this.state.idSelectedRole == 'null') {
+            await fetch(`https://localhost:44379/api/roles/RemoveRoleFromUser?userId=${this.state.userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            }).then(response => response.ok === true ? location.reload() : null)
         }else{
-            await fetch(`https://localhost:44379/api/defect?userId=${this.state.SelectedTechnician.id}&defectId=${this.state.defectId}`, {
+            await fetch(`https://localhost:44379/api/roles/AssignRole?userId=${this.state.userId}&roleId=${this.state.idSelectedRole}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,46 +75,32 @@ class SetTechnician extends React.Component {
         return (
             <form onSubmit={this.handleSubmit} className={classes.form}>
                 <div>
-                    <MuiDialogContent dividers className={classes.dialogContent}>
-                        {/*                 
+                    <MuiDialogContent dividers className={classes.dialogContent}>  
                         <FormControl
                             variant="outlined"
                             size="small"
                             fullWidth
                             className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Fixes defect</InputLabel>
+                            <InputLabel id="outlined-label">Roles</InputLabel>
                             <Select
-                                labelId="demo-simple-select-outlined-label"
-                                label="Fixes defect"
+                                labelId="outlined-label"
+                                label="Roles"
                                 onChange={this.handleChange}
-                                value={this.state.idSelectedTechnician}
+                                value={this.state.idSelectedRole}
                             >
                                 {this.state.menuItems.map((params, index) => {
-                                    const { firstName, lastName, id} = params
+                                    const { roleName, id} = params
                                     return (
                                         <MenuItem key={index} value={id}>
-                                            {`${firstName} ${lastName}`}
+                                            {roleName}
                                         </MenuItem>
                                     )
                                 })}
+                                <MenuItem value='null'>
+                                    Unset role
+                                </MenuItem>
                             </Select>
-                        </FormControl> */}
-                        <Autocomplete
-                            id="Fixes defect"
-                            options={this.state.menuItems}
-                            onChange={this.handleChange}
-                            getOptionLabel={(option) => option.fullName}
-                            size="small"
-                            className={`${classes.formControl} ${classes.formInput}`}
-                            fullWidth
-                            renderInput={(params) =>
-                                <TextField {...params} label="Fixes defect" variant="outlined" />
-                            }
-                            renderOption={(option) => {
-                                // console.log(option)
-                                return <div>{option.fullName}</div>;
-                            }}
-                        />
+                        </FormControl>
                     </MuiDialogContent>
                     <MuiDialogActions>
                         <Button
