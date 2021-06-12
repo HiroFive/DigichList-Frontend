@@ -9,6 +9,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Collapse from '@material-ui/core/Collapse';
+import Alert from '@material-ui/lab/Alert';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 
@@ -23,14 +25,14 @@ class SetTechnician extends React.Component {
             menuItems: [],
             idSelectedRole: '',
             userId: props.data.id,
-            SelectedRole: ''
+            open: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     async componentDidMount() {
         this._isMounted = true;
-        await fetch('https://localhost:44379/api/roles', {
+        await fetch('https://digichlistbackend.herokuapp.com/api/roles', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,27 +41,37 @@ class SetTechnician extends React.Component {
         })
             .then(response => response.json())
 
-            .then(reqResponse => this.setState({menuItems: reqResponse}))
+            .then(reqResponse => {
+                this.setState({ menuItems: reqResponse })
+                this.setState({
+                    idSelectedRole: this.state.menuItems.map((params) => {
+                        return params.roleName == this.props.data.roleName ? params.id : ''
+                    }).join('')
+                })
+            }
+            )
+            .then()
     }
     componentWillUnMount() {
         this._isMounted = false;
     }
-    handleChange(event) {
+    handleChange(event, newValue) {
         event.stopPropagation();
         this.setState({ idSelectedRole: event.target.value })
+        this.props.data.roleName == 'Technician' && newValue.props.children !== 'Technician' ? this.setState({ open: true }) : this.setState({ open: false })
     }
     async handleSubmit(event) {
         event.preventDefault();
         if (this.state.idSelectedRole == 'null') {
-            await fetch(`https://localhost:44379/api/roles/RemoveRoleFromUser?userId=${this.state.userId}`, {
+            await fetch(`https://digichlistbackend.herokuapp.com/api/roles/RemoveRoleFromUser?userId=${this.state.userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
             }).then(response => response.ok === true ? location.reload() : null)
-        }else{
-            await fetch(`https://localhost:44379/api/roles/AssignRole?userId=${this.state.userId}&roleId=${this.state.idSelectedRole}`, {
+        } else {
+            await fetch(`https://digichlistbackend.herokuapp.com/api/roles/AssignRole?userId=${this.state.userId}&roleId=${this.state.idSelectedRole}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +79,6 @@ class SetTechnician extends React.Component {
                 },
             }).then(response => response.ok === true ? location.reload() : null)
         }
-
     }
 
     render() {
@@ -75,12 +86,17 @@ class SetTechnician extends React.Component {
         return (
             <form onSubmit={this.handleSubmit} className={classes.form}>
                 <div>
-                    <MuiDialogContent dividers className={classes.dialogContent}>  
+                    <MuiDialogContent dividers className={classes.dialogContent}>
+                        <Collapse in={this.state.open}>
+                            <Alert variant="filled" className={classes.roleAlert} severity="warning">
+                                When you change the role, all assigned defects will be removed
+                            </Alert>
+                        </Collapse>
                         <FormControl
                             variant="outlined"
                             size="small"
                             fullWidth
-                            className={classes.formControl}>
+                            className={`${classes.formControl} ${classes.formInput}`}>
                             <InputLabel id="outlined-label">Roles</InputLabel>
                             <Select
                                 labelId="outlined-label"
@@ -89,7 +105,7 @@ class SetTechnician extends React.Component {
                                 value={this.state.idSelectedRole}
                             >
                                 {this.state.menuItems.map((params, index) => {
-                                    const { roleName, id} = params
+                                    const { roleName, id } = params
                                     return (
                                         <MenuItem key={index} value={id}>
                                             {roleName}

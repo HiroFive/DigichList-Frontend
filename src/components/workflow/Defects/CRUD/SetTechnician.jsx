@@ -29,7 +29,7 @@ class SetTechnician extends React.Component {
     }
     async componentDidMount() {
         this._isMounted = true;
-        await fetch('https://localhost:44379/api/users/GetTechnicians', {
+        await fetch('https://digichlistbackend.herokuapp.com/api/users/GetTechnicians', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ class SetTechnician extends React.Component {
         if (this.state.SelectedTechnician == '') {
             this.props.setOpenState(false)
         }else{
-            await fetch(`https://localhost:44379/api/defect?userId=${this.state.SelectedTechnician.id}&defectId=${this.state.defectId}`, {
+            await fetch(`https://digichlistbackend.herokuapp.com/api/defect?userId=${this.state.SelectedTechnician.id}&defectId=${this.state.defectId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,29 +79,6 @@ class SetTechnician extends React.Component {
             <form onSubmit={this.handleSubmit} className={classes.form}>
                 <div>
                     <MuiDialogContent dividers className={classes.dialogContent}>
-                        {/*                 
-                        <FormControl
-                            variant="outlined"
-                            size="small"
-                            fullWidth
-                            className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Fixes defect</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                label="Fixes defect"
-                                onChange={this.handleChange}
-                                value={this.state.idSelectedTechnician}
-                            >
-                                {this.state.menuItems.map((params, index) => {
-                                    const { firstName, lastName, id} = params
-                                    return (
-                                        <MenuItem key={index} value={id}>
-                                            {`${firstName} ${lastName}`}
-                                        </MenuItem>
-                                    )
-                                })}
-                            </Select>
-                        </FormControl> */}
                         <Autocomplete
                             id="Fixes defect"
                             options={this.state.menuItems}

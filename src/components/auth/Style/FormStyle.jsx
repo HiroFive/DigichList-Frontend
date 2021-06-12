@@ -38,7 +38,7 @@ const FormStyle = theme => ({
         alignItems: 'center',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',
         '& .MuiDropzonePreviewList-removeButton': {
-            '& .MuiSvgIcon-root':{
+            '& .MuiSvgIcon-root': {
                 fontSize: 20,
                 color: defaultTextColor,
             }
@@ -111,6 +111,14 @@ const FormStyle = theme => ({
         '&:hover': {
             backgroundColor: 'transparent',
         },
+    },
+    roleAlert: {
+        width: '100%',
+        paddingTop: 0,
+        paddingBottom: 0,
+        '& .MuiSvgIcon-root': {
+            fontSize: 30
+        }
     },
     dataGrid: {
         fontSize: 12.5,
@@ -213,7 +221,7 @@ const FormStyle = theme => ({
             width: 320,
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            display:'inline-block',
+            display: 'inline-block',
             justifyContent: 'start',
             textOverflow: 'ellipsis',
         }

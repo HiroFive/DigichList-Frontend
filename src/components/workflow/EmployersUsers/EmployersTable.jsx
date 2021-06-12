@@ -140,7 +140,7 @@ class RenderCellGrid extends React.Component {
     }
     componentDidMount() {
         this._isMounted = true;
-        axios.get(`https://localhost:44379/api/users`)
+        axios.get(`https://digichlistbackend.herokuapp.com/api/users`)
             .then(res => {
                 const persons = res.data;
                 this.setState({ rows: persons })

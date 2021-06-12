@@ -39,7 +39,7 @@ const EditForm = (props) => {
     const [fixesDefect, setFixesDefect] = useState(data[0].userThatFixesDefect);
 
     useEffect(() => {
-        fetch('https://localhost:44379/api/users/GetTechnicians', {
+        fetch('https://digichlistbackend.herokuapp.com/api/users/GetTechnicians', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

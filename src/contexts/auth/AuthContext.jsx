@@ -38,7 +38,8 @@ const useAuth = () => useContext(AuthContext);
 // export { login }
 
 const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(false)
+    const [currentUser, setCurrentUser] = useState({})
+    const [isLogged, setIsLogged] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const login = async (email, password) => {
@@ -56,7 +57,7 @@ const AuthProvider = ({ children }) => {
                     password: password
                 })
             }).then(props => response = props)
-            setCurrentUser(response.ok)
+            setIsLogged(response.ok)
             return response
         } catch (error) {
             return { error: error }
@@ -73,9 +74,7 @@ const AuthProvider = ({ children }) => {
             },
             credentials: 'include',
         }).then(props => response = props)
-
-        setCurrentUser(!response.ok)
-        console.log(!response.ok)
+        setIsLogged(!response.ok)
     }
 
     useEffect(() => {
@@ -88,14 +87,28 @@ const AuthProvider = ({ children }) => {
             credentials: 'include',
         }).then(
             res => {
-                setCurrentUser(res.ok)
-                setLoading(false)
+                setIsLogged(res.ok)
+                return res.json()
             }
-        )
-    }, [currentUser])
+        ).then(reqResponse =>{
+            setCurrentUser(reqResponse) 
+            //     () => {
+            //     var newObject = {
+            //         id: reqResponse.id,
+            //         username: reqResponse.username,
+            //         password: reqResponse.password,
+            //         email: reqResponse.email,
+            //         accessLevel: 0,
+            //     }
+            //     return newObject
+            // }
+            setLoading(false)
+        } )
+    }, [isLogged])
 
     const authContextValue = {
         currentUser,
+        isLogged,
         login,
         logout,
     }

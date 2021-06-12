@@ -108,7 +108,7 @@ export default class RequestTable extends React.Component {
   }
   componentDidMount() {
     this._isMounted = true;
-    axios.get(`https://localhost:44379/api/defect`).then((res) => {
+    axios.get(`https://digichlistbackend.herokuapp.com/api/defect`).then((res) => {
       const defect = res.data;
       this.setState({ rows: defect });
       this.setState({ loading: false });
