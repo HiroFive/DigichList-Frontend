@@ -11,10 +11,6 @@ import ModalStyle from '../EmployersUsers/ModalStyle'
 export default function AcceptModal(props) {
     const classes = ModalStyle()
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <div>
             <Modal

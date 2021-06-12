@@ -85,7 +85,7 @@ class AdminUsersTable extends React.Component {
                     rowsPerPageOptions={[13, 20, 50]}
                     selectionModel={this.state.selectionModel}
                     components={{
-                        Toolbar: ((event) => TableTools(this.state.selectionModel, this.state.rows)),
+                        Toolbar: (() => TableTools(this.state.selectionModel, this.state.rows)),
                         LoadingOverlay: LoadingOverlay,
                     }}
                 />
