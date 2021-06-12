@@ -9,10 +9,25 @@ import List from '@material-ui/core/List';
 import {FormStyleMake} from '../../../auth/Style/FormStyle';
 
 
+function DeleteSting(data){
+    var string ='?'
+    data.map((params)=>{
+        string = string + (string.length > 2? ' ': '' ) + `idArr=${params.id}`
+    })
+    return string.replace(/\s/g, '&');
+}
+
 const DeleteForm = (props) => {
     const styles = FormStyleMake();
-    const handleSubmit = () => {
-        console.log(props.data);
+    const  handleSubmit = async (event) => {
+        event.preventDefault();
+        await fetch(`https://digichlistbackend.herokuapp.com/api/defect/DeleteDefects?${DeleteSting(props.data)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        }).then(response => response.ok === true ? location.reload() : null )
     }
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -24,10 +39,10 @@ const DeleteForm = (props) => {
                     <div className={styles.demo}>
                         <List>
                             {props.data.map((item) => {
-                                const { id, roomNumber, state } = item
+                                const { id, roomNumber, defectStatus } = item
                                 return ( 
                                     <Typography key={id} variant="body2" className={styles.title}>
-                                        {`{ Id#${id}; room: ${roomNumber}; state: ${state} }`}
+                                        {`{ Id#${id}; room: ${roomNumber}; state: ${defectStatus} }`}
                                     </Typography>
                                 )
                             })}

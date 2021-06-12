@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
 import ShowChart from '../../components/workflow/Dashboard/Chart';
-import RequestTable from '../../components/workflow/Dashboard/RequestTable';
+import DefectTable from '../../components/workflow/Dashboard/DefectTale';
 import BarChart from '../../components/workflow/Dashboard/BarChart';
 
 function Dashboard(props) {
@@ -28,7 +28,7 @@ function Dashboard(props) {
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Grid item xs={12} md={4} lg={12}>
-            <RequestTable />
+            <DefectTable />
           </Grid>
         </Paper>
       </Grid>

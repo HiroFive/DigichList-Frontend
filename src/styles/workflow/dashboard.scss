@@ -32,13 +32,18 @@
     font-size: 13px;
   }
 }
-.MuiMenu-paper{
-  .MuiMenuItem-root{
+.MuiMenu-paper {
+  .MuiMenuItem-root {
     font-size: 13px;
   }
 }
+.MuiAutocomplete-popper {
+  .MuiAutocomplete-option, .MuiAutocomplete-noOptions {
+    font-size: 14px;
+  }
+}
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
   .chart-container {
     height: 300px !important;
   }

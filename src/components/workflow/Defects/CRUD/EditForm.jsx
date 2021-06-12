@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -10,8 +10,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import FormStyle from '../../../auth/FormStyle';
+import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
 import { DropzoneArea } from 'material-ui-dropzone'
 import { Formik } from "formik";
@@ -19,11 +20,12 @@ import * as Yup from "yup";
 
 const EditForm = (props) => {
     const { data } = props;
-    const classes = FormStyle()
+    const classes = FormStyleMake()
+    const [technician, setTechnician] = useState([])
     const menuItems = [
         {
-            value: 'Open',
-            label: 'Open',
+            value: 'Opened',
+            label: 'Opened',
         },
         {
             value: 'Fixing',
@@ -34,20 +36,44 @@ const EditForm = (props) => {
             label: 'Solved',
         }
     ]
-    console.log(data)
+    const [fixesDefect, setFixesDefect] = useState(data[0].userThatFixesDefect);
+
+    useEffect(() => {
+        fetch('https://digichlistbackend.herokuapp.com/api/users/GetTechnicians', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(reqResponse => {
+                setTechnician(reqResponse.map((params) => {
+                    var newObject = {
+                        id: params.id,
+                        fullName: `${params.firstName} ${params.lastName}`,
+                        firstName: params.firstName,
+                        lastName: params.lastName,
+                    }
+                    return newObject
+                }))
+            })
+
+    }, [data])
+
     return (
         <>
-            { data.length < 2 ? (
-                < Formik
+            {data.length < 2 ? (
+                <Formik
                     initialValues={{
                         roomNumber: data[0].roomNumber,
-                        state: `${data[0].state}`,
+                        defectStatus: data[0].defectStatus,
                         publisher: data[0].publisher,
-                        openDate: new Date(),
+                        openDate: data[0].createdAt,
                         closeDate: '',
                         image: [],
                         description: data[0].description,
-                        assignedDefect: `${data[0].assignedDefect}`,
+                        userThatFixesDefect: fixesDefect,
                     }}
                     validationSchema={
                         Yup.object().shape({
@@ -58,13 +84,12 @@ const EditForm = (props) => {
                                 .required('Required'),
                             image: Yup.array()
                                 .min(1, 'is required!'),
-                            assignedDefect: Yup.string()
-                                .min(5, 'Too Short!')
-                                .max(20, 'Too Long!')
+                            defectStatus: Yup.string()
                                 .required('Required'),
                         })
                     }
                     onSubmit={values => {
+                        values.userThatFixesDefect = fixesDefect
                         console.log(values);
                     }}
                 >
@@ -103,16 +128,56 @@ const EditForm = (props) => {
                                                 type="number"
                                                 id="roomNumber"
                                             />
+                                            {/* <FormControl
+                                                variant="outlined"
+                                                size="small"
+                                                fullWidth
+                                                error={formik.errors.userThatFixesDefect == 'Required'}
+                                                className={`${classes.formControl} ${classes.formInput}`}>
+                                                <InputLabel id="outlined-label">Fixes defect</InputLabel>
+                                                <Select
+                                                    labelId="outlined-label"
+                                                    label="Fixes defect"
+                                                    {...formik.getFieldProps('userThatFixesDefect')}
+                                                >
+                                                    {technician.map((params, index) => {
+                                                        const { firstName, lastName, id } = params
+                                                        return (
+                                                            <MenuItem key={index} value={`${firstName} ${lastName}`}>
+                                                                {`${firstName} ${lastName}`}
+                                                            </MenuItem >
+                                                        )
+                                                    })}
+
+                                                </Select>
+                                            </FormControl> */}
+                                            <Autocomplete
+                                                id="Fixes defect"
+                                                options={technician.map((option) => option.fullName)}
+                                                value={fixesDefect}
+                                                onChange={(event, newValue) => {
+                                                    setFixesDefect(newValue);
+                                                }
+                                                }
+                                                getOptionLabel={(option) => option}
+                                                size="small"
+                                                className={`${classes.formControl} ${classes.formInput}`}
+                                                fullWidth
+                                                renderInput={(params) =>
+                                                    <TextField {...params} label="Fixes defect" variant="outlined" />
+                                                }
+                                            />
+
                                             <FormControl
                                                 variant="outlined"
                                                 size="small"
                                                 fullWidth
-                                                className={classes.formControl}>
-                                                <InputLabel id="demo-simple-select-outlined-label">State</InputLabel>
+                                                className={`${classes.formControl} ${classes.formInput}`}>
+                                                <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-outlined-label"
-                                                    label="State"
-                                                    {...formik.getFieldProps('state')}
+                                                    label="Status"
+                                                    {...formik.getFieldProps('defectStatus')}
                                                 >
                                                     {menuItems.map((params, index) => {
                                                         const { value } = params
@@ -126,18 +191,18 @@ const EditForm = (props) => {
                                                 </Select>
                                             </FormControl>
 
-                                            <TextField
-                                                error={formik.errors.assignedDefect == 'Required'}
+                                            {/* <TextField
+                                                error={formik.errors.userThatFixesDefect == 'Required'}
                                                 className={classes.formInput}
-                                                id="assignedDefect"
-                                                label="Assigned Defect"
-                                                helperText={formik.errors.assignedDefect}
-                                                {...formik.getFieldProps('assignedDefect')}
+                                                id="userThatFixesDefect"
+                                                label="Fixes defect"
+                                                helperText={formik.errors.userThatFixesDefect}
+                                                {...formik.getFieldProps('userThatFixesDefect')}
                                                 margin="normal"
                                                 size="small"
                                                 fullWidth
                                                 variant="outlined"
-                                            />
+                                            /> */}
                                             <Typography variant="body2" className={formik.errors.image == 'is required!' ? classes.error : null}
                                                 component="h1" gutterBottom>
                                                 Chose image: {formik.errors.image}
@@ -163,7 +228,7 @@ const EditForm = (props) => {
                                                 disableRipple
                                                 variant="contained">
                                                 Save
-                                </Button>
+                                            </Button>
                                         </MuiDialogActions>
                                     </div>
                                 </form>

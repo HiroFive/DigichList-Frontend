@@ -32,9 +32,18 @@ export default function AcceptModal(props) {
                 <Fade in={props.open}>
                     <div className={classes.paper}>
                         <Typography variant="h6" gutterBottom>
-                            Description from (<strong className={classes.uId}>Id#{props.context.id}</strong>)
+                            {props.title} (<strong className={classes.uId}>Id#{props.context.id}</strong>)
                         </Typography>
-                        {props.context.description}
+                        {props.component ? (
+                            <>
+                                {props.component}
+                            </>
+                        ) : (
+                            <>
+                                {props.context.description}
+                            </>
+                        )}
+
                     </div>
                 </Fade>
             </Modal>
@@ -46,4 +55,6 @@ AcceptModal.propTypes = {
     open: PropTypes.bool,
     handleClose: PropTypes.func,
     context: PropTypes.object,
+    title: PropTypes.string,
+    component: PropTypes.object
 }

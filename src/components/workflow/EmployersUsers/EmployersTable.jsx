@@ -12,6 +12,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { LoadingOverlay } from '../TableComponents/Overlay'
 import TableTools from './EmployersToolBar';
+import SetRole from './CRUD/SetRole';
+import CustomDialog from '../Dialog/Dialog';
 
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { withStyles } from "@material-ui/core/styles";
@@ -70,6 +72,30 @@ function RegisterMenu(props) {
 }
 
 
+function RenderRole(props) {
+    RenderRole.propTypes = {
+        value: PropTypes.object,
+    }
+    const classes = FormStyleMake()
+    const paramValue = props.value.row.roleName
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    return (
+        <div>
+            {open ? <CustomDialog title={'Give new role'} form={<SetRole data={props.value.row} setOpenState={setOpen} />} open={open} setOpenState={setOpen} />
+                : null
+            }
+            <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleOpen} className={`${classes.description} ${classes.smallButton}`} >
+                {paramValue}
+            </Button>
+        </div>
+
+    )
+}
+
 
 const columns = [
     {
@@ -88,9 +114,11 @@ const columns = [
         width: 145,
     },
     {
-        field: 'role',
+        field: 'roleName',
         headerName: 'Role',
         width: 180,
+        // eslint-disable-next-line react/display-name
+        renderCell: (params) => (<RenderRole value={params} />)
     },
     {
         field: 'isRegistered',
@@ -118,6 +146,7 @@ class RenderCellGrid extends React.Component {
                 this.setState({ rows: persons })
                 this.setState({ loading: false })
             })
+
     }
     componentWillUnMount() {
         this._isMounted = false;
@@ -125,6 +154,7 @@ class RenderCellGrid extends React.Component {
 
     render() {
         const { classes } = this.props
+
         return (
             <div className={classes.fixedHeightTable}>
                 <DataGrid

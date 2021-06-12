@@ -19,7 +19,9 @@ import ErrorRoundedIcon from '@material-ui/icons/ErrorRounded';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 
 import TableTools from './TableToolBar';
-import DescriptionModal from './DescriptionModal'
+import DescriptionModal from './DescriptionModal';
+import SetTechnician from './CRUD/SetTechnician';
+import CustomDialog from '../Dialog/Dialog';
 
 function RenderDescription(props) {
     RenderDescription.propTypes = {
@@ -39,7 +41,7 @@ function RenderDescription(props) {
 
     return (
         <div>
-            {open ? <DescriptionModal open={open} handleClose={handleClose} context={context} />
+            {open ? <DescriptionModal open={open} handleClose={handleClose} title={'Description of the defect'} context={context} />
                 : null
             }
             <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleOpen} className={classes.description} >
@@ -49,16 +51,51 @@ function RenderDescription(props) {
     )
 }
 
+function RenderFixesDefect(props) {
+    RenderFixesDefect.propTypes = {
+        value: PropTypes.object,
+    }
+    const classes = FormStyleMake()
+    const paramValue = props.value.row.userThatFixesDefect
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    return (
+        <div>
+            {open ? <CustomDialog title={'Set Technician'} form={<SetTechnician data={props.value.row} setOpenState={setOpen} />} open={open} setOpenState={setOpen} />
+                : null
+            }
+            {paramValue == null ? (
+                <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleOpen} className={`${classes.description} ${classes.smallButton}`} >
+                    Set Technician
+                </Button>
+            ) : (
+                <>
+                    {paramValue}
+                </>
+            )}
+        </div>
+
+    )
+}
+
+
 function RenderState(props) {
     RenderState.propTypes = {
         value: PropTypes.object,
     }
     const classes = FormStyleMake()
-    const paramValue = props.value.value;
+    const paramValue = props.value.row.defectStatus
     return (
         <div>
-            {paramValue == 'Open' ? (
-                <Chip variant="outlined" size="small" label="Open" className={classes.opened} icon={<ErrorRoundedIcon />} />
+            {paramValue == 'Opened' ? (
+                <Chip variant="outlined" size="small" label="Opened" className={classes.opened} icon={<ErrorRoundedIcon />} />
             ) : (
                 paramValue == 'Fixing' ? (
                     <Chip variant="outlined" size="small" label="Fixing" className={classes.fixing} icon={<FiberManualRecordRoundedIcon />} />
@@ -93,15 +130,21 @@ const columns = [
         width: 150,
     },
     {
-        field: 'assignedDefect',
-        headerName: 'Decides defect',
-        width: 150,
+        field: 'userThatFixesDefect',
+        headerName: 'Fixes defect',
+        width: 180,
+        renderCell: (params) => <RenderFixesDefect value={params} />,
     },
     {
-        field: 'state',
-        headerName: 'State',
+        field: 'defectStatus',
+        headerName: 'Status',
         width: 150,
         renderCell: (params) => <RenderState value={params} />,
+    },
+    {
+        field: 'createdAt',
+        headerName: 'Created At',
+        width: 150,
     },
 
 ];
@@ -121,8 +164,8 @@ class DefectsTable extends React.Component {
         this._isMounted = true;
         axios.get(`https://digichlistbackend.herokuapp.com/api/defect`)
             .then(res => {
-                const persons = res.data;
-                this.setState({ rows: persons })
+                const defect = res.data;
+                this.setState({ rows: defect })
                 this.setState({ loading: false })
             })
     }
