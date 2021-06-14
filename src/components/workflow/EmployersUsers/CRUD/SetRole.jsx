@@ -86,7 +86,7 @@ class SetTechnician extends React.Component {
                 <div>
                     <MuiDialogContent dividers className={classes.dialogContent}>
                         <Collapse in={this.state.open}>
-                            <Alert variant="filled" className={classes.roleAlert} severity="warning">
+                            <Alert variant="outlined" className={classes.roleAlert} severity="warning">
                                 When you change the role, all assigned defects will be removed
                             </Alert>
                         </Collapse>

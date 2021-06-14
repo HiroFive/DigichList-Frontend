@@ -54,12 +54,14 @@ class AdminUsersTable extends React.Component {
         this._isMounted = true;
         axios.get(`https://digichlistbackend.herokuapp.com/api/admin`)
             .then(res => {
-                const admins = res.data;
-                this.setState({ rows: admins })
-                this.setState({ loading: false })
+                if (this._isMounted) {
+                    const admins = res.data;
+                    this.setState({ rows: admins })
+                    this.setState({ loading: false })
+                }
             })
     }
-    componentWillUnMount() {
+    componentWillUnmount() {
         this._isMounted = false;
     }
 
@@ -73,11 +75,11 @@ class AdminUsersTable extends React.Component {
                     columns={columns}
                     checkboxSelection
                     onSelectionModelChange={(newSelection) => {
-                        this.setState({selectionModel: newSelection.selectionModel});
+                        this.setState({ selectionModel: newSelection.selectionModel });
                     }}
                     page={this.state.page}
                     onPageChange={(params) => {
-                        this.setState({page: params.page});
+                        this.setState({ page: params.page });
                     }}
                     pageSize={13}
                     loading={this.state.loading}
