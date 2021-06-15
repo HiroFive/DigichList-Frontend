@@ -1,40 +1,47 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
+import { LoadingOverlay } from '../TableComponents/Overlay';
 
 import Button from '@material-ui/core/Button';
 import { DataGrid } from '@material-ui/data-grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import {FormStyleMake} from '../../auth/Style/FormStyle';
+import FormStyle, { FormStyleMake } from '../../auth/Style/FormStyle';
+import { withStyles } from '@material-ui/core/styles';
 
-import AcceptModal from './Modal'
+import AcceptRequest from './CRUD/AcceptRequest';
+import CustomDialog from '../Dialog/Dialog';
 
 function RequestAction(props) {
     const { context } = props;
-    const classes = FormStyleMake()
+    const classes = FormStyleMake();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
     const handleDeny = (e) => {
         e.preventDefault();
-        console.log(context.row)
-    }
+        console.log(context.row);
+    };
 
     return (
         <div>
-            {open ? <AcceptModal open={open} handleClose={handleClose} context={context.row} />
-                : null
-            }
+            {open ? (
+                <CustomDialog
+                    title={'Accept registered request'}
+                    form={<AcceptRequest data={context.row} setOpenState={setOpen} />}
+                    open={open}
+                    setOpenState={setOpen}
+                />
+            ) : null}
             <form onSubmit={handleDeny}>
-                <ButtonGroup disableElevation variant="contained" color="primary">
+                <ButtonGroup disableElevation variant='contained' color='primary'>
                     <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
+                        variant='contained'
+                        color='primary'
+                        size='small'
                         className={classes.submitBtn}
                         style={{ marginLeft: 16 }}
                         onClick={handleOpen}
@@ -42,23 +49,22 @@ function RequestAction(props) {
                         Accept
                     </Button>
                     <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        size="small"
-                        className={`${classes.submitBtn} ${classes.cancelBtn}`}>
+                        variant='contained'
+                        color='primary'
+                        type='submit'
+                        size='small'
+                        className={`${classes.submitBtn} ${classes.cancelBtn}`}
+                    >
                         Deny
                     </Button>
                 </ButtonGroup>
             </form>
-
         </div>
-
-    )
+    );
 }
 RequestAction.propTypes = {
     context: PropTypes.object,
-}
+};
 
 const columns = [
     {
@@ -69,55 +75,77 @@ const columns = [
     {
         field: 'firstName',
         headerName: 'Firs Name',
-        width: 125,
+        width: 145,
     },
     {
         field: 'lastName',
         headerName: 'Last Name',
-        width: 125,
-    },
-    {
-        field: 'role',
-        headerName: 'Role',
-        width: 150,
+        width: 145,
     },
     {
         field: 'isRegistered',
         headerName: 'Action',
         width: 160,
         // eslint-disable-next-line react/display-name
-        renderCell: (params) => (<RequestAction context={params} />)
+        renderCell: (params) => <RequestAction context={params} />,
     },
-
 ];
-
-export default function RenderCellGrid(props) {
-    const rows = props.data
-    const classes = FormStyleMake()
-    const [selectionModel, setSelectionModel] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    return (
-        <div className={classes.fixedHeightTable}>
-            <DataGrid
-                className={classes.dataGrid}
-                rows={rows}
-                columns={columns}
-                page={page}
-                onPageChange={(params) => {
-                    setPage(params.page);
-                }}
-                pageSize={14}
-                pagination
-                onSelectionModelChange={(newSelection) => {
-                    setSelectionModel(newSelection.selectionModel);
-                }}
-                selectionModel={selectionModel}
-            />
-        </div>
-    );
+class RequestTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            rows: [],
+            selectionModel: [],
+            page: 0,
+            loading: true,
+        };
+    }
+    componentDidMount() {
+        this._isMounted = true;
+        axios
+            .get(`https://digichlistbackend.herokuapp.com/api/users/GetUnregisteredUsers`)
+            .then((res) => {
+                if (this._isMounted) {
+                    const persons = res.data;
+                    this.setState({ rows: persons });
+                    this.setState({ loading: false });
+                }
+            });
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+    render() {
+        const { classes } = this.props;
+        return (
+            <div className={classes.fixedHeightTable}>
+                <DataGrid
+                    className={classes.dataGrid}
+                    rows={this.state.rows}
+                    columns={columns}
+                    page={this.state.page}
+                    onPageChange={(params) => {
+                        this.setState({ page: params });
+                    }}
+                    components={{
+                        LoadingOverlay: LoadingOverlay,
+                    }}
+                    pageSize={14}
+                    loading={this.state.loading}
+                    pagination
+                    onSelectionModelChange={(newSelection) => {
+                        this.setState({ selectionModel: newSelection.selectionModel });
+                    }}
+                    selectionModel={this.state.selectionModel}
+                />
+            </div>
+        );
+    }
 }
 
-
-RenderCellGrid.propTypes = {
+RequestTable.propTypes = {
     data: PropTypes.array.isRequired,
+    classes: PropTypes.object,
 };
+
+export default withStyles(FormStyle, { withTheme: true })(RequestTable);

@@ -1,7 +1,16 @@
 import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import "../../../styles/workflow/dashboard.scss";
-
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import '../../../styles/workflow/dashboard.scss';
+import { getCurrentData, getWeekAgoDate } from '../RequestHelper';
 
 const data = [
   {
@@ -48,23 +57,22 @@ const data = [
   },
 ];
 
-
-
 export default class ShowChart extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       data: data,
-    }
+    };
   }
 
   render() {
+    console.log(getCurrentData())
+    console.log(getWeekAgoDate())
     return (
-      <ResponsiveContainer className="chart-container">
+      <ResponsiveContainer className='chart-container'>
         <LineChart
-          className="chartSize"
+          className='chartSize'
           width={500}
-        
           data={this.state.data}
           margin={{
             top: 10,
@@ -73,14 +81,19 @@ export default class ShowChart extends PureComponent {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='name' />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="open" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="fixing" stroke="#707C97" />
-          <Line type="monotone" dataKey="solved" stroke="#82ca9d" />
+          <Line
+            type='monotone'
+            dataKey='open'
+            stroke='#8884d8'
+            activeDot={{ r: 8 }}
+          />
+          <Line type='monotone' dataKey='fixing' stroke='#707C97' />
+          <Line type='monotone' dataKey='solved' stroke='#82ca9d' />
         </LineChart>
       </ResponsiveContainer>
     );

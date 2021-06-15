@@ -5,12 +5,11 @@ import AdminUsers from './AdminUsers'
 import Defects from './Defects'
 import EmployersUsers from './EmployersUsers'
 // import Error404 from '../Error/404page'
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from '../../components/auth/PrivateRoute';
 import AccessLevelRoute from '../../components/auth/AccessLevelRoute'
 
 export default function WorkflowRouter() {
-    // const location = useLocation();
     return (
             <SideMenu
                 body={

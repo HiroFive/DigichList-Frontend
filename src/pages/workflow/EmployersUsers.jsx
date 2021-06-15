@@ -146,13 +146,13 @@ class WorkerUsers extends React.Component {
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
         return (
             <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={7}>
+                <Grid item xs={12} md={7} lg={8}>
                     <Paper className={fixedHeightPaper}>
                         <strong>Employers Users</strong>
                         <EmployersTable/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4} lg={5}>
+                <Grid item xs={12} md={5} lg={4}>
                     <Paper className={fixedHeightPaper}>
                         <strong>Registered requests</strong>
                         <RequestTable data={requestData} />

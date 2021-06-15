@@ -22,6 +22,7 @@ export function SubmitBtn(props) {
         <Button
             className={styles.submitBtn}
             type="submit"
+            data-testid='submit-button'
             fullWidth
             disableRipple
             variant="contained">
