@@ -215,6 +215,7 @@ class DefectsTable extends React.Component {
 	}
 
 	render() {
+		// console.log(this.state.rows)
 		const { classes } = this.props;
 		return (
 			<div className={classes.fixedHeightFullSize}>

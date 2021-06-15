@@ -8,81 +8,25 @@ import Chip from '@material-ui/core/Chip';
 import { FormStyleMake } from '../../auth/Style/FormStyle';
 import TableStyle from '../Defects/TableStyle';
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { LoadingOverlay } from '../TableComponents/Overlay';
 import TableTools from './EmployersToolBar';
 import SetRole from './CRUD/SetRole';
 import CustomDialog from '../Dialog/Dialog';
 
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { withStyles } from '@material-ui/core/styles';
-
-import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 
-function RegisterMenu(props) {
-    RegisterMenu.propTypes = {
-        params: PropTypes.object,
-    };
-    const { params } = props;
+function RegisterMenu() {
     const classes = FormStyleMake();
-    const [selectedIndex, setSelectedIndex] = React.useState(params.value);
-    const options = ['Set No', 'Set Yes'];
     return (
         <div className={classes.rootClip}>
-            <PopupState variant='popover' popupId='demo-popup-menu'>
-                {(popupState) => {
-                    const closeMenu = (event, index) => {
-                        setSelectedIndex(index);
-                        popupState.close();
-                    };
-                    return (
-                        <React.Fragment>
-                            {selectedIndex == true ? (
-                                <Button
-                                    aria-controls='fade-menu'
-                                    aria-haspopup='true'
-                                    {...bindTrigger(popupState)}
-                                >
-                                    <Chip
-                                        className={classes.allowed}
-                                        variant='outlined'
-                                        size='small'
-                                        label='Yes'
-                                        icon={<DoneIcon />}
-                                    />
-                                </Button>
-                            ) : (
-                                <Button
-                                    aria-controls='fade-menu'
-                                    aria-haspopup='true'
-                                    {...bindTrigger(popupState)}
-                                >
-                                    <Chip
-                                        className={classes.forbidden}
-                                        variant='outlined'
-                                        size='small'
-                                        label='No'
-                                        icon={<CloseIcon />}
-                                    />
-                                </Button>
-                            )}
-                            <Menu className={classes.regMenu} {...bindMenu(popupState)}>
-                                {options.map((option, index) => (
-                                    <MenuItem
-                                        key={option}
-                                        disabled={index === Number(selectedIndex)}
-                                        onClick={(event) => closeMenu(event, index)}
-                                    >
-                                        {option}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </React.Fragment>
-                    );
-                }}
-            </PopupState>
+            <Chip
+                className={classes.allowed}
+                variant='outlined'
+                size='small'
+                label='Yes'
+                icon={<DoneIcon />}
+            />
         </div>
     );
 }
@@ -148,7 +92,7 @@ const columns = [
         headerName: 'Registered',
         width: 125,
         // eslint-disable-next-line react/display-name
-        renderCell: (params) => <RegisterMenu params={params} />,
+        renderCell: () => <RegisterMenu />,
     },
 ];
 class RenderCellGrid extends React.Component {
@@ -164,9 +108,7 @@ class RenderCellGrid extends React.Component {
     componentDidMount() {
         this._isMounted = true;
         axios
-            .get(
-                `https://digichlistbackend.herokuapp.com/api/users/GetRegisteredUsers`
-            )
+            .get(`https://digichlistbackend.herokuapp.com/api/users/GetRegisteredUsers`)
             .then((res) => {
                 // console.log(res.data)
                 if (this._isMounted) {

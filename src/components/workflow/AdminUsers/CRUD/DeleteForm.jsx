@@ -1,18 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { DeleteSting } from '../../RequestHelper'
+
 import Button from '@material-ui/core/Button';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
+
 import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
 
 const DeleteForm = (props) => {
     const styles = FormStyleMake();
-    const handleSubmit = () => {
-        console.log(props.data);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        await fetch(`https://digichlistbackend.herokuapp.com/api/${DeleteSting(props.data)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        }).then(response => response.ok === true ? location.reload() : null)
     }
     return (
         <form onSubmit={handleSubmit} className={styles.form}>

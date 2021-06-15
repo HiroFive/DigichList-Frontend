@@ -58,7 +58,7 @@ class AcceptRequest extends React.Component {
             this.setState({ showErrorMessage: true })
         }
         else {
-            await fetch(`https://digichlistbackend.herokuapp.com/api/roles`,
+            await fetch(`https://digichlistbackend.herokuapp.com/api/roles/AssignRole?userId=${this.state.userId}&roleId=${this.state.idSelectedRole}`,
                 {
                     method: 'POST',
                     headers: {
