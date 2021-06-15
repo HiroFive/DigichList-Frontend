@@ -103,9 +103,7 @@ class RequestTable extends React.Component {
     componentDidMount() {
         this._isMounted = true;
         axios
-            .get(
-                `https://digichlistbackend.herokuapp.com/api/users/GetUnregisteredUsers`
-            )
+            .get(`https://digichlistbackend.herokuapp.com/api/users/GetUnregisteredUsers`)
             .then((res) => {
                 if (this._isMounted) {
                     const persons = res.data;

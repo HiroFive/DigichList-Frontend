@@ -71,7 +71,7 @@ const EditForm = (props) => {
                         publisher: data[0].publisher,
                         openDate: data[0].createdAt,
                         closeDate: '',
-                        image: [],
+                        // image: [],
                         description: data[0].description,
                         userThatFixesDefect: fixesDefect,
                     }}
@@ -82,8 +82,8 @@ const EditForm = (props) => {
                                 .required('Required'),
                             description: Yup.string()
                                 .required('Required'),
-                            image: Yup.array()
-                                .min(1, 'is required!'),
+                            // image: Yup.array()
+                            //     .min(1, 'is required!'),
                             defectStatus: Yup.string()
                                 .required('Required'),
                         })
@@ -128,29 +128,7 @@ const EditForm = (props) => {
                                                 type="number"
                                                 id="roomNumber"
                                             />
-                                            {/* <FormControl
-                                                variant="outlined"
-                                                size="small"
-                                                fullWidth
-                                                error={formik.errors.userThatFixesDefect == 'Required'}
-                                                className={`${classes.formControl} ${classes.formInput}`}>
-                                                <InputLabel id="outlined-label">Fixes defect</InputLabel>
-                                                <Select
-                                                    labelId="outlined-label"
-                                                    label="Fixes defect"
-                                                    {...formik.getFieldProps('userThatFixesDefect')}
-                                                >
-                                                    {technician.map((params, index) => {
-                                                        const { firstName, lastName, id } = params
-                                                        return (
-                                                            <MenuItem key={index} value={`${firstName} ${lastName}`}>
-                                                                {`${firstName} ${lastName}`}
-                                                            </MenuItem >
-                                                        )
-                                                    })}
-
-                                                </Select>
-                                            </FormControl> */}
+  
                                             <Autocomplete
                                                 id="Fixes defect"
                                                 options={technician.map((option) => option.fullName)}
@@ -203,11 +181,11 @@ const EditForm = (props) => {
                                                 fullWidth
                                                 variant="outlined"
                                             /> */}
-                                            <Typography variant="body2" className={formik.errors.image == 'is required!' ? classes.error : null}
+                                            {/* <Typography variant="body2" className={formik.errors.image == 'is required!' ? classes.error : null}
                                                 component="h1" gutterBottom>
                                                 Chose image: {formik.errors.image}
-                                            </Typography>
-                                            <DropzoneArea
+                                            </Typography> */}
+                                            {/* <DropzoneArea
                                                 className={classes.dropzoneArea}
                                                 dropzoneClass={classes.dopzoneAreaText}
                                                 showPreviews={true}
@@ -218,7 +196,7 @@ const EditForm = (props) => {
                                                 }}
                                                 previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
                                                 previewChipProps={{ classes: { root: classes.previewChip } }}
-                                                previewText='' />
+                                                previewText='' /> */}
                                         </MuiDialogContent>
                                         <MuiDialogActions>
                                             <Button

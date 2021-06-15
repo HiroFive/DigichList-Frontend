@@ -5,38 +5,6 @@ const AuthContext = createContext({})
 
 const useAuth = () => useContext(AuthContext);
 
-// async function login(email, password) {
-//     // console.log(`${email}, ${password}`);
-//     var some = await fetch('https://digichlistbackend.herokuapp.com/login', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         credentials: 'include',
-//         body: JSON.stringify({
-//             email,
-//             password
-//         })
-//     })
-//     console.log(some)
-//     // const CurrentUser = await fetch('https://digichlistbackend.herokuapp.com/admin', {
-//     //     method: 'GET',
-//     //     headers: { 'Content-Type': 'application/json' },
-//     //     credentials: 'include',
-//     // })
-//     // if (!CurrentUser) {
-//     //     await fetch('https://digichlistbackend.herokuapp.com/login', {
-//     //         method: 'POST',
-//     //         headers: { 'Content-Type': 'application/json' },
-//     //         credentials: 'include',
-//     //         body: JSON.stringify({
-//     //             email,
-//     //             password
-//     //         })
-//     //     })
-//     // }
-//     // console.log(CurrentUser)
-// }
-// export { login }
-
 const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({})
     const [isLogged, setIsLogged] = useState(false)
