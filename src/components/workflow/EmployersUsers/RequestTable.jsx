@@ -12,140 +12,144 @@ import { withStyles } from '@material-ui/core/styles';
 
 import AcceptRequest from './CRUD/AcceptRequest';
 import CustomDialog from '../Dialog/Dialog';
+import RequestToolBar from './RequestToolBar';
 
 function RequestAction(props) {
-    const { context } = props;
-    const classes = FormStyleMake();
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
+	const { context } = props;
+	const classes = FormStyleMake();
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => {
+		setOpen(true);
+	};
 
-    const handleDeny = (e) => {
-        e.preventDefault();
-        console.log(context.row);
-    };
+	const handleDeny = (e) => {
+		e.preventDefault();
+		console.log(context.row);
+	};
 
-    return (
-        <div>
-            {open ? (
-                <CustomDialog
-                    title={'Accept registered request'}
-                    form={<AcceptRequest data={context.row} setOpenState={setOpen} />}
-                    open={open}
-                    setOpenState={setOpen}
-                />
-            ) : null}
-            <form onSubmit={handleDeny}>
-                <ButtonGroup disableElevation variant='contained' color='primary'>
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        size='small'
-                        className={classes.submitBtn}
-                        style={{ marginLeft: 16 }}
-                        onClick={handleOpen}
-                    >
-                        Accept
-                    </Button>
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        type='submit'
-                        size='small'
-                        className={`${classes.submitBtn} ${classes.cancelBtn}`}
-                    >
-                        Deny
-                    </Button>
-                </ButtonGroup>
-            </form>
-        </div>
-    );
+	return (
+		<div>
+			{open ? (
+				<CustomDialog
+					title={'Accept registered request'}
+					form={<AcceptRequest data={context.row} setOpenState={setOpen} />}
+					open={open}
+					setOpenState={setOpen}
+				/>
+			) : null}
+			<form onSubmit={handleDeny}>
+				<ButtonGroup disableElevation variant='contained' color='primary'>
+					<Button
+						variant='contained'
+						color='primary'
+						size='small'
+						className={classes.submitBtn}
+						style={{ marginLeft: 16 }}
+						onClick={handleOpen}
+					>
+						Accept
+					</Button>
+					<Button
+						variant='contained'
+						color='primary'
+						type='submit'
+						size='small'
+						className={`${classes.submitBtn} ${classes.cancelBtn}`}
+					>
+						Deny
+					</Button>
+				</ButtonGroup>
+			</form>
+		</div>
+	);
 }
 RequestAction.propTypes = {
-    context: PropTypes.object,
+	context: PropTypes.object,
 };
 
 const columns = [
-    {
-        field: 'id',
-        headerName: '#id',
-        width: 85,
-    },
-    {
-        field: 'firstName',
-        headerName: 'Firs Name',
-        width: 145,
-    },
-    {
-        field: 'lastName',
-        headerName: 'Last Name',
-        width: 145,
-    },
-    {
-        field: 'isRegistered',
-        headerName: 'Action',
-        width: 160,
-        // eslint-disable-next-line react/display-name
-        renderCell: (params) => <RequestAction context={params} />,
-    },
+	{
+		field: 'id',
+		headerName: '#id',
+		width: 85,
+	},
+	{
+		field: 'firstName',
+		headerName: 'Firs Name',
+		width: 145,
+	},
+	{
+		field: 'lastName',
+		headerName: 'Last Name',
+		width: 145,
+	},
+	{
+		field: 'isRegistered',
+		headerName: 'Action',
+		width: 160,
+		// eslint-disable-next-line react/display-name
+		renderCell: (params) => <RequestAction context={params} />,
+	},
 ];
 class RequestTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rows: [],
-            selectionModel: [],
-            page: 0,
-            loading: true,
-        };
-    }
-    componentDidMount() {
-        this._isMounted = true;
-        axios
-            .get(`https://digichlistbackend.herokuapp.com/api/users/GetUnregisteredUsers`)
-            .then((res) => {
-                if (this._isMounted) {
-                    const persons = res.data;
-                    this.setState({ rows: persons });
-                    this.setState({ loading: false });
-                }
-            });
-    }
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.fixedHeightTable}>
-                <DataGrid
-                    className={classes.dataGrid}
-                    rows={this.state.rows}
-                    columns={columns}
-                    page={this.state.page}
-                    onPageChange={(params) => {
-                        this.setState({ page: params });
-                    }}
-                    components={{
-                        LoadingOverlay: LoadingOverlay,
-                    }}
-                    pageSize={14}
-                    loading={this.state.loading}
-                    pagination
-                    onSelectionModelChange={(newSelection) => {
-                        this.setState({ selectionModel: newSelection.selectionModel });
-                    }}
-                    selectionModel={this.state.selectionModel}
-                />
-            </div>
-        );
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			rows: [],
+			selectionModel: [],
+			page: 0,
+			loading: true,
+		};
+	}
+	componentDidMount() {
+		this._isMounted = true;
+		axios
+			.get(
+				`https://digichlistbackend.herokuapp.com/api/users/GetUnregisteredUsers`
+			)
+			.then((res) => {
+				if (this._isMounted) {
+					const persons = res.data;
+					this.setState({ rows: persons });
+					this.setState({ loading: false });
+				}
+			});
+	}
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+	render() {
+		const { classes } = this.props;
+		return (
+			<div className={classes.fixedHeightTable}>
+				<DataGrid
+					className={classes.dataGrid}
+					rows={this.state.rows}
+					columns={columns}
+					page={this.state.page}
+					onPageChange={(params) => {
+						this.setState({ page: params });
+					}}
+					components={{
+						Toolbar: RequestToolBar,
+						LoadingOverlay: LoadingOverlay,
+					}}
+					pageSize={14}
+					loading={this.state.loading}
+					pagination
+					onSelectionModelChange={(newSelection) => {
+						this.setState({ selectionModel: newSelection.selectionModel });
+					}}
+					selectionModel={this.state.selectionModel}
+				/>
+			</div>
+		);
+	}
 }
 
 RequestTable.propTypes = {
-    data: PropTypes.array.isRequired,
-    classes: PropTypes.object,
+	data: PropTypes.array.isRequired,
+	classes: PropTypes.object,
 };
 
 export default withStyles(FormStyle, { withTheme: true })(RequestTable);

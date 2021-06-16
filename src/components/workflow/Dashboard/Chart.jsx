@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import {
   LineChart,
   Line,
@@ -10,64 +11,71 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import '../../../styles/workflow/dashboard.scss';
-import { getCurrentData, getWeekAgoDate } from '../RequestHelper';
+import { getCurrentData, getWeekAgoDate, sortDefectsByWeek } from '../RequestHelper';
 
-const data = [
-  {
-    name: 'Mon.',
-    open: 20,
-    fixing: 20,
-    solved: 34,
-  },
-  {
-    name: 'Tue.',
-    open: 10,
-    fixing: 25,
-    solved: 14,
-  },
-  {
-    name: 'Wed.',
-    open: 21,
-    fixing: 23,
-    solved: 12,
-  },
-  {
-    name: 'Thu.',
-    open: 10,
-    fixing: 50,
-    solved: 31,
-  },
-  {
-    name: 'Fri.',
-    open: 20,
-    fixing: 5,
-    solved: 1,
-  },
-  {
-    name: 'Sat.',
-    open: 28,
-    fixing: 26,
-    solved: 5,
-  },
-  {
-    name: 'Sun.',
-    open: 28,
-    fixing: 12,
-    solved: 4,
-  },
-];
 
 export default class ShowChart extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
+      data: [
+        {
+          name: 'Mon.',
+          open: 20,
+          fixing: 20,
+          solved: 34,
+        },
+        {
+          name: 'Tue.',
+          open: 10,
+          fixing: 25,
+          solved: 14,
+        },
+        {
+          name: 'Wed.',
+          open: 21,
+          fixing: 23,
+          solved: 12,
+        },
+        {
+          name: 'Thu.',
+          open: 10,
+          fixing: 50,
+          solved: 31,
+        },
+        {
+          name: 'Fri.',
+          open: 20,
+          fixing: 5,
+          solved: 1,
+        },
+        {
+          name: 'Sat.',
+          open: 28,
+          fixing: 26,
+          solved: 5,
+        },
+        {
+          name: 'Sun.',
+          open: 28,
+          fixing: 12,
+          solved: 4,
+        },
+      ],
+      sortedData: []
     };
   }
+  componentDidMount() {
+		this._isMounted = true;
+    this.setState({sortedData: sortDefectsByWeek(this.props.data) })
+	}
+	componentWillUnMount() {
+		this._isMounted = false;
+	}
 
   render() {
-    console.log(getCurrentData())
-    console.log(getWeekAgoDate())
+    console.log(this.state.sortedData)
+    // console.log(getWeekAgoDate())
     return (
       <ResponsiveContainer className='chart-container'>
         <LineChart
@@ -98,4 +106,7 @@ export default class ShowChart extends PureComponent {
       </ResponsiveContainer>
     );
   }
+}
+ShowChart.propTypes = {
+  data: PropTypes.array,
 }
