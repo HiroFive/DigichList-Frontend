@@ -5,16 +5,6 @@ import Button from '@material-ui/core/Button';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import ClearIcon from '@material-ui/icons/Clear';
 import { Adornment } from '../../Dialog/Inputs';
 
 import FormStyle from '../../../auth/Style/FormStyle';
@@ -23,40 +13,28 @@ import { withStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-class AddAdmin extends React.Component {
+class SetNewPassword extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			menuItems: [
-				{
-					id: 0,
-					name: 'Admin',
-				},
-				{
-					id: 1,
-					name: 'SuperAdmin',
-				},
-			],
+			data: this.props.data,
+			selectedId: '',
 		};
 	}
 	render() {
 		const { classes } = this.props;
-		const menuItem = this.state.menuItems;
+		console.log(this.state.data);
 		return (
 			<Formik
 				initialValues={{
-					firstName: '',
-					lastName: '',
-					email: '',
+					// firstName: this.state.data[0].firstName,
+					// lastName: this.state.data[0].lastName,
+					// email: this.state.data[0].email,
 					password: '',
-					accessLevel: 'Admin',
+					confirmPassword: '',
+					// accessLevel: this.state.data[0].accessLevel,
 				}}
 				validationSchema={Yup.object().shape({
-					firstName: Yup.string().required('Required'),
-					lastName: Yup.string().required('Required'),
-					email: Yup.string()
-						.email('Invalid email')
-						.required('Email is required'),
 					password: Yup.string()
 						.min(6, 'Password must be at least 6 characters')
 						.matches(/(?=.*[0-9])/, 'Password must contain a number.')
@@ -66,21 +44,20 @@ class AddAdmin extends React.Component {
 						.required('Please confirm your password'),
 				})}
 				onSubmit={async (values) => {
-					console.log(values);
-					await fetch(`https://digichlistbackend.herokuapp.com/api/admin`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-							Accept: 'application/json',
-						},
-						body: JSON.stringify({
-							firstName: values.firstName,
-							lastName: values.lastName,
-							email: values.email,
-							password: values.password,
-							accessLevel: values.accessLevel,
-						}),
-					}).then((response) =>
+					await fetch(
+						`https://digichlistbackend.herokuapp.com/api/UpdateAdmin`,
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								Accept: 'application/json',
+							},
+							body: JSON.stringify({
+								id: this.state.selectedId,
+								password: values.password,
+							}),
+						}
+					).then((response) =>
 						response.ok === true ? location.reload() : null
 					);
 				}}
@@ -100,45 +77,6 @@ class AddAdmin extends React.Component {
 						<form onSubmit={formik.handleSubmit} className={classes.form}>
 							<div>
 								<MuiDialogContent dividers>
-									<TextField
-										error={formik.errors.firstName == 'Required'}
-										className={classes.formInput}
-										variant='outlined'
-										margin='normal'
-										helperText={formik.errors.firstName}
-										{...formik.getFieldProps('firstName')}
-										fullWidth
-										size='small'
-										label='First name'
-										type='name'
-										id='firstName'
-									/>
-									<TextField
-										error={formik.errors.lastName == 'Required'}
-										className={classes.formInput}
-										variant='outlined'
-										margin='normal'
-										helperText={formik.errors.lastName}
-										{...formik.getFieldProps('lastName')}
-										fullWidth
-										size='small'
-										label='Last name'
-										type='name'
-										id='LastName'
-									/>
-									<TextField
-										error={formik.errors.email == 'Invalid email'}
-										className={classes.formInput}
-										variant='outlined'
-										margin='normal'
-										helperText={formik.errors.email}
-										{...formik.getFieldProps('email')}
-										fullWidth
-										size='small'
-										label='Email Address'
-										type='email'
-										id='email'
-									/>
 									<TextField
 										error={
 											formik.errors.password ==
@@ -195,28 +133,6 @@ class AddAdmin extends React.Component {
 											),
 										}}
 									/>
-									<FormControl
-										variant='outlined'
-										size='small'
-										fullWidth
-										className={`${classes.formControl} ${classes.formInput}`}
-									>
-										<InputLabel id='outlined-label'>Access Level</InputLabel>
-										<Select
-											labelId='outlined-label'
-											label='Access Level'
-											{...formik.getFieldProps('accessLevel')}
-										>
-											{menuItem.map((params, index) => {
-												const { name, id } = params;
-												return (
-													<MenuItem key={index} value={name}>
-														{name}
-													</MenuItem>
-												);
-											})}
-										</Select>
-									</FormControl>
 								</MuiDialogContent>
 								<MuiDialogActions>
 									<Button
@@ -226,7 +142,7 @@ class AddAdmin extends React.Component {
 										disableRipple
 										variant='contained'
 									>
-										Add
+										Save
 									</Button>
 								</MuiDialogActions>
 							</div>
@@ -238,8 +154,9 @@ class AddAdmin extends React.Component {
 	}
 }
 
-AddAdmin.propTypes = {
+SetNewPassword.propTypes = {
+	data: PropTypes.object,
 	classes: PropTypes.object,
 };
 
-export default withStyles(FormStyle, { withTheme: true })(AddAdmin);
+export default withStyles(FormStyle, { withTheme: true })(SetNewPassword);

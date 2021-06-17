@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const DeleteSting = (data) => {
+export const DeleteString = (data) => {
 	var string = '?';
 	data.map((params) => {
 		string = string + (string.length > 2 ? ' ' : '') + `idArr=${params.id}`;

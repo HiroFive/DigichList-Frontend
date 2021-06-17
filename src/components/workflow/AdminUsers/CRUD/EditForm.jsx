@@ -47,10 +47,9 @@ class EditAdmin extends React.Component {
 				{this.state.data.length < 2 && this.state.data.length !== 0 ? (
 					<Formik
 						initialValues={{
-							firstName: this.state.data[0].firstName,
+							firstName: `${this.state.data[0].firstName}`,
 							lastName: this.state.data[0].lastName,
 							email: this.state.data[0].email,
-							password: this.state.data[0].password,
 							accessLevel: this.state.data[0].accessLevel,
 						}}
 						validationSchema={Yup.object().shape({
@@ -59,15 +58,11 @@ class EditAdmin extends React.Component {
 							email: Yup.string()
 								.email('Invalid email')
 								.required('Email is required'),
-							password: Yup.string()
-								.min(6, 'Password must be at least 6 characters')
-								.matches(/(?=.*[0-9])/, 'Password must contain a number.')
-								.required('Password is required'),
 						})}
 						onSubmit={async (values) => {
 							console.log(values);
 							await fetch(
-								`https://digichlistbackend.herokuapp.com/api/UpdateAdmin`,
+								`https://digichlistbackend.herokuapp.com/api/admin/UpdateAdmin`,
 								{
 									method: 'POST',
 									headers: {
@@ -75,24 +70,19 @@ class EditAdmin extends React.Component {
 										Accept: 'application/json',
 									},
 									body: JSON.stringify({
-                                        id: this.state.selectedId,
+										id: this.state.selectedId,
 										firstName: values.firstName,
 										lastName: values.lastName,
 										email: values.email,
-										password: values.password,
 										accessLevel: values.accessLevel,
 									}),
 								}
+							).then((response) =>
+								response.ok === true ? location.reload() : null
 							);
 						}}
 					>
 						{function (formik) {
-							const [values, setValues] = React.useState({
-								showPassword: false,
-							});
-							const handleClickShowPassword = () => {
-								setValues({ showPassword: !values.showPassword });
-							};
 							return (
 								<form onSubmit={formik.handleSubmit} className={classes.form}>
 									<div>
@@ -133,50 +123,6 @@ class EditAdmin extends React.Component {
 												label='Email Address'
 												type='email'
 												id='email'
-											/>
-											<TextField
-												error={
-													formik.errors.password ==
-													'Password must be at least 6 characters'
-												}
-												className={classes.formInput}
-												variant='outlined'
-												margin='normal'
-												helperText={formik.errors.password}
-												{...formik.getFieldProps('password')}
-												fullWidth
-												size='small'
-												label='Password'
-												type={values.showPassword ? 'text' : 'password'}
-												id='password'
-												InputProps={{
-													endAdornment: (
-														<InputAdornment position='end'>
-															<IconButton
-																aria-label='toggle password visibility'
-																onClick={handleClickShowPassword}
-															>
-																{values.showPassword ? (
-																	<Visibility
-																		className={classes.formControlIcon}
-																	/>
-																) : (
-																	<VisibilityOff
-																		className={classes.formControlIcon}
-																	/>
-																)}
-															</IconButton>
-															<IconButton
-																aria-label='toggle clear password'
-																onClick={()=> formik.setFieldValue('password', '')}
-															>
-																<ClearIcon
-																	className={classes.formControlIcon}
-																/>
-															</IconButton>
-														</InputAdornment>
-													),
-												}}
 											/>
 											<FormControl
 												variant='outlined'
