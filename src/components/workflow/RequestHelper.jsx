@@ -8,23 +8,11 @@ export const DeleteSting = (data) => {
 	return string.replace(/\s/g, '&');
 };
 
-export const getCurrentData = () => {
+const getMonthsAgeDate = (howLongAgo) => {
 	const date = new Date();
-	return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+	date.setMonth(date.getMonth() - howLongAgo);
+	return date;
 };
-export const getWeekAgoDate = () => {
-	const date = new Date();
-	return (
-		date.getMonth() + 1 + '/' + (date.getDate() - 7) + '/' + date.getFullYear()
-	);
-};
-// const toNumber = (string) => {
-// 	const array = string.split('/').map((params) => Number(params));
-// 	return array;
-// };
-// const addArrayValue = (array) =>{
-//     return array.reduce((acc, val) => acc + val, 0)
-// }
 
 const modifyDateInObject = (object) => {
 	const tempObject = Object.assign(object);
@@ -32,44 +20,121 @@ const modifyDateInObject = (object) => {
 	return tempObject;
 };
 
-export const sortDefectsByWeek = (data) => {
-	const range = [new Date(getWeekAgoDate()), new Date(getCurrentData())];
-	console.log(
-		createWeekData(
-			data.filter((params) => {
-				const paramValue = new Date(params.createdAt);
-				if (range[0] <= paramValue && range[1] >= paramValue) {
-					return modifyDateInObject(params);
-				}
-			})
-		)
-	);
-	return data.filter((params) => {
-		const paramValue = new Date(params.createdAt);
-		if (range[0] <= paramValue && range[1] >= paramValue) {
-			return modifyDateInObject(params);
-		}
-	});
+const defectDateFilter = (params, range) => {
+	const paramValue = new Date(params.createdAt);
+	if (range[0] <= paramValue && range[1] >= paramValue) {
+		return modifyDateInObject(params);
+	}
 };
 
-export const createWeekData = (data) => {
-	const weekDay  = [
-		'Sun.',
-		'Mon.',
-		'Tue.',
-		'Wed.',
-		'Thu.',
-		'Fri.',
-		'Sat.',
+export const sortDefectsByWeek = (data) => {
+	const date = new Date();
+	date.setHours(0, 0, 0, 0);
+	const firstDayOfWeek = date.getDate() - date.getDay();
+	const lastDayOfWeek = firstDayOfWeek + 6;
+	const range = [
+		new Date(date.setDate(firstDayOfWeek)),
+		new Date(date.setDate(lastDayOfWeek)),
 	];
+	return data.filter((params) => defectDateFilter(params, range));
+};
+
+export const sortDefectsByDate = (data, howLongAgo = 6) => {
+	const range = [getMonthsAgeDate(howLongAgo), new Date()];
+	return data.filter((params) => defectDateFilter(params, range));
+};
+
+const sortDefectByStatus = (status, dataObj) => {
+	switch (status) {
+		case 'Opened':
+			dataObj['open'] += 1;
+			break;
+		case 'Fixing':
+			dataObj['fixing'] += 1;
+			break;
+		case 'Solved':
+			dataObj['solved'] += 1;
+			break;
+		default:
+			break;
+	}
+	return dataObj;
+};
+const dateConverter = (date) => {
+	const weekDay = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'];
+	const months = [
+		'Jan.',
+		'Feb.',
+		'Mar.',
+		'Apr.',
+		'May.',
+		'Jun.',
+		'Jul.',
+		'Aug.',
+		'Sep.',
+		'Oct.',
+		'Nov.',
+		'Dec.',
+	];
+	return `${weekDay[date.getDay()]} ${date.getDate()} ${
+		months[date.getMonth() + 1]
+	}`;
+};
+
+export const getWeekData = (data) => {
+	const date = new Date();
+	const firstDayOfWeek = date.getDate() - date.getDay();
+	const lastDayOfWeek = firstDayOfWeek + 6;
 	const weekData = [];
+	for (var i = firstDayOfWeek; i <= lastDayOfWeek; i++) {
+		weekData.push({
+			name: dateConverter(new Date(date.setDate(i))),
+			open: 0,
+			fixing: 0,
+			solved: 0,
+		});
+	}
 	data.forEach((params) => {
-		const { createdAt } = params;
-        const found = weekData.some((element) => element.name === weekDay[createdAt.getDay()]);
-		if (!found) {
-			weekData.push({ name: weekDay[createdAt.getDay()]});
-		}
-		// console.log(createdAt);
+		const { createdAt, defectStatus } = params;
+		weekData.forEach((element) => {
+			if (element.name === dateConverter(createdAt)) {
+				element = sortDefectByStatus(defectStatus, element);
+			}
+		});
 	});
 	return weekData;
+};
+export const getMonthsData = (data, howLongAgo = 6) => {
+	const months = [
+		'Jan.',
+		'Feb.',
+		'Mar.',
+		'Apr.',
+		'May.',
+		'Jun.',
+		'Jul.',
+		'Aug.',
+		'Sep.',
+		'Oct.',
+		'Nov.',
+		'Dec.',
+	];
+	const monthsData = [];
+	for (var i = 1; i <= howLongAgo; i++) {
+		const date = getMonthsAgeDate(howLongAgo - i);
+		monthsData.push({
+			name: months[date.getMonth()],
+			open: 0,
+			solved: 0,
+		});
+	}
+	data.forEach((params) => {
+		const { createdAt, defectStatus } = params;
+		monthsData.forEach((element) => {
+			if (element.name === months[createdAt.getMonth()]) {
+				element = sortDefectByStatus(defectStatus, element);
+			}
+		});
+	});
+	return monthsData;
 };

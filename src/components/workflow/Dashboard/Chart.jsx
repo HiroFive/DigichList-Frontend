@@ -11,77 +11,33 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import '../../../styles/workflow/dashboard.scss';
-import { getCurrentData, getWeekAgoDate, sortDefectsByWeek } from '../RequestHelper';
+import { sortDefectsByWeek, getWeekData } from '../RequestHelper';
 
 
 export default class ShowChart extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          name: 'Mon.',
-          open: 20,
-          fixing: 20,
-          solved: 34,
-        },
-        {
-          name: 'Tue.',
-          open: 10,
-          fixing: 25,
-          solved: 14,
-        },
-        {
-          name: 'Wed.',
-          open: 21,
-          fixing: 23,
-          solved: 12,
-        },
-        {
-          name: 'Thu.',
-          open: 10,
-          fixing: 50,
-          solved: 31,
-        },
-        {
-          name: 'Fri.',
-          open: 20,
-          fixing: 5,
-          solved: 1,
-        },
-        {
-          name: 'Sat.',
-          open: 28,
-          fixing: 26,
-          solved: 5,
-        },
-        {
-          name: 'Sun.',
-          open: 28,
-          fixing: 12,
-          solved: 4,
-        },
-      ],
-      sortedData: []
+      diagramData: [],
     };
   }
   componentDidMount() {
 		this._isMounted = true;
-    this.setState({sortedData: sortDefectsByWeek(this.props.data) })
+    // this.setState({sortedData: sortDefectsByWeek(this.props.data) })
+    this.setState({diagramData: getWeekData(sortDefectsByWeek(this.props.data)) })
 	}
 	componentWillUnMount() {
 		this._isMounted = false;
 	}
 
   render() {
-    console.log(this.state.sortedData)
-    // console.log(getWeekAgoDate())
+    // console.log(this.state.diagramData)
     return (
       <ResponsiveContainer className='chart-container'>
         <LineChart
           className='chartSize'
           width={500}
-          data={this.state.data}
+          data={this.state.diagramData}
           margin={{
             top: 10,
             right: 20,
