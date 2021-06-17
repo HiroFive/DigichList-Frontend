@@ -3,41 +3,6 @@ import PropTypes from 'prop-types';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { sortDefectsByDate, getMonthsData } from '../RequestHelper';
-
-const data = [
-    {
-      name: 'Jan.',
-      open: 20,
-      solved: 34,
-    },
-    {
-      name: 'Feb.',
-      open: 10,
-      solved: 14,
-    },
-    {
-      name: 'Mar.',
-      open: 21,
-      solved: 12,
-    },
-    {
-      name: 'Apr.',
-      open: 10,
-      fixing: 50,
-      solved: 31,
-    },
-    {
-      name: 'May.',
-      open: 20,
-      solved: 1,
-    },
-    {
-      name: 'June',
-      open: 28,
-      solved: 5,
-    },
-  ];
-
 export default class CustomBarChart extends PureComponent {
   constructor(props) {
     super(props);
@@ -47,7 +12,6 @@ export default class CustomBarChart extends PureComponent {
   }
   componentDidMount() {
 		this._isMounted = true;
-    // this.setState({sortedData: sortDefectsByWeek(this.props.data) })
     this.setState({diagramData: getMonthsData(sortDefectsByDate(this.props.data), 6) })
 	}
 	componentWillUnMount() {

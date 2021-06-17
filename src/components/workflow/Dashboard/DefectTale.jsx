@@ -23,16 +23,32 @@ export default class RequestTable extends React.Component {
 				{ name: 'roomNumber', title: 'Room Number' },
 				{ name: 'defectStatus', title: 'Status' },
 				{ name: 'publisher', title: 'Publisher' },
+				{ name: 'createdAt', title: 'Created At' },
 			],
 			defaultColumnWidths: [
 				{ columnName: 'id', width: 80 },
 				{ columnName: 'description', width: 340 },
 				{ columnName: 'roomNumber', width: 150 },
+				{ columnName: 'createdAt', width: 150 },
 				{ columnName: 'defectStatus', width: 100 },
 				{ columnName: 'publisher', width: 200 },
 			],
 		};
 	}
+	componentDidMount() {
+		this._isMounted = true;
+		axios
+			.get(`https://digichlistbackend.herokuapp.com/api/defect`)
+			.then((res) => {
+				const defect = res.data;
+				this.setState({ rows: defect });
+				this.setState({ loading: false });
+			});
+	}
+	componentWillUnMount() {
+		this._isMounted = false;
+	}
+
 	render() {
 		return (
 			<div className='request-table'>
@@ -51,5 +67,5 @@ export default class RequestTable extends React.Component {
 	}
 }
 RequestTable.propTypes = {
-  data: PropTypes.array.isRequired,
-}
+	data: PropTypes.array.isRequired,
+};

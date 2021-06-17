@@ -18,7 +18,7 @@ class SetNewPassword extends React.Component {
 		super(props);
 		this.state = {
 			data: this.props.data,
-			selectedId: '',
+			selectedId: this.props.data.id,
 		};
 	}
 	render() {
@@ -27,12 +27,8 @@ class SetNewPassword extends React.Component {
 		return (
 			<Formik
 				initialValues={{
-					// firstName: this.state.data[0].firstName,
-					// lastName: this.state.data[0].lastName,
-					// email: this.state.data[0].email,
 					password: '',
 					confirmPassword: '',
-					// accessLevel: this.state.data[0].accessLevel,
 				}}
 				validationSchema={Yup.object().shape({
 					password: Yup.string()
@@ -45,7 +41,7 @@ class SetNewPassword extends React.Component {
 				})}
 				onSubmit={async (values) => {
 					await fetch(
-						`https://digichlistbackend.herokuapp.com/api/UpdateAdmin`,
+						`https://digichlistbackend.herokuapp.com/api/admin/UpdateAdminPassword`,
 						{
 							method: 'POST',
 							headers: {

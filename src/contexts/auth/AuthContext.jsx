@@ -60,16 +60,6 @@ const AuthProvider = ({ children }) => {
             }
         ).then(reqResponse =>{
             setCurrentUser(reqResponse) 
-            //     () => {
-            //     var newObject = {
-            //         id: reqResponse.id,
-            //         username: reqResponse.username,
-            //         password: reqResponse.password,
-            //         email: reqResponse.email,
-            //         accessLevel: 0,
-            //     }
-            //     return newObject
-            // }
             setLoading(false)
         } )
     }, [isLogged])

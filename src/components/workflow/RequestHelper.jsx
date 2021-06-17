@@ -77,7 +77,7 @@ const dateConverter = (date) => {
 		'Dec.',
 	];
 	return `${weekDay[date.getDay()]} ${date.getDate()} ${
-		months[date.getMonth() + 1]
+		months[date.getMonth()]
 	}`;
 };
 
