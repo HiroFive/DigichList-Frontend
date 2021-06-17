@@ -138,7 +138,7 @@ function RenderState(props) {
 					className={classes.notDefined}
 					variant='outlined'
 					size='small'
-					label='Not defined'
+					label='Not Assigned'
 					icon={<AdjustIcon />}
 				/>
 			)}

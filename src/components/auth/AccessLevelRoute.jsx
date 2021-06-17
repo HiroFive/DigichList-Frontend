@@ -9,7 +9,7 @@ export default function AccessLevelRoute({ component: Componet, ...rest }) {
         <div>
             <Route
                 {...rest} render={props => {
-                    return currentUser.accessLevel == 1 ? <Componet {...props} /> : <Redirect to='/workflow/dashboard' />
+                    return currentUser.accessLevel == 2 ? <Componet {...props} /> : <Redirect to='/workflow/dashboard' />
                 }}
             >
 

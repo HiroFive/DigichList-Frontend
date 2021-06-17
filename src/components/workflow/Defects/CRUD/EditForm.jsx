@@ -9,12 +9,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { FormStyleMake } from '../../../auth/Style/FormStyle';
 
-import { DropzoneArea } from 'material-ui-dropzone'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -82,8 +80,6 @@ const EditForm = (props) => {
                                 .required('Required'),
                             description: Yup.string()
                                 .required('Required'),
-                            // image: Yup.array()
-                            //     .min(1, 'is required!'),
                             defectStatus: Yup.string()
                                 .required('Required'),
                         })
@@ -168,35 +164,6 @@ const EditForm = (props) => {
 
                                                 </Select>
                                             </FormControl>
-
-                                            {/* <TextField
-                                                error={formik.errors.userThatFixesDefect == 'Required'}
-                                                className={classes.formInput}
-                                                id="userThatFixesDefect"
-                                                label="Fixes defect"
-                                                helperText={formik.errors.userThatFixesDefect}
-                                                {...formik.getFieldProps('userThatFixesDefect')}
-                                                margin="normal"
-                                                size="small"
-                                                fullWidth
-                                                variant="outlined"
-                                            /> */}
-                                            {/* <Typography variant="body2" className={formik.errors.image == 'is required!' ? classes.error : null}
-                                                component="h1" gutterBottom>
-                                                Chose image: {formik.errors.image}
-                                            </Typography> */}
-                                            {/* <DropzoneArea
-                                                className={classes.dropzoneArea}
-                                                dropzoneClass={classes.dopzoneAreaText}
-                                                showPreviews={true}
-                                                showPreviewsInDropzone={false}
-
-                                                onChange={(files) => {
-                                                    formik.values.image = files
-                                                }}
-                                                previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
-                                                previewChipProps={{ classes: { root: classes.previewChip } }}
-                                                previewText='' /> */}
                                         </MuiDialogContent>
                                         <MuiDialogActions>
                                             <Button

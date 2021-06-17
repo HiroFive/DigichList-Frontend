@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { sortDefectsByDate, getMonthsData } from '../RequestHelper';
 
 const data = [
     {
@@ -33,14 +36,23 @@ const data = [
       open: 28,
       solved: 5,
     },
-    {
-      name: 'Sun.',
-      open: 28,
-      solved: 4,
-    },
   ];
 
-export default class Example extends PureComponent {
+export default class CustomBarChart extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      diagramData: [],
+    };
+  }
+  componentDidMount() {
+		this._isMounted = true;
+    // this.setState({sortedData: sortDefectsByWeek(this.props.data) })
+    this.setState({diagramData: getMonthsData(sortDefectsByDate(this.props.data), 6) })
+	}
+	componentWillUnMount() {
+		this._isMounted = false;
+	}
 
   render() {
     return (
@@ -49,7 +61,7 @@ export default class Example extends PureComponent {
           className="chartSize"
           width={500}
           height={300}
-          data={data}
+          data={this.state.diagramData}
           margin={{
             top: 5,
             right: 20,
@@ -68,4 +80,8 @@ export default class Example extends PureComponent {
       </ResponsiveContainer>
     );
   }
+}
+
+CustomBarChart.propTypes = {
+  data: PropTypes.array,
 }

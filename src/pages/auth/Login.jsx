@@ -105,7 +105,7 @@ const loginForm = (props) => {
                                     variant="contained">
                                     Login
                             </Button>
-                                <ResetLink text='Forgot Password?' to='/forgot-password' />
+                                {/* <ResetLink text='Forgot Password?' to='/forgot-password' /> */}
                             </form>
                         }
                     />)

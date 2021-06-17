@@ -31,7 +31,7 @@ function ListMenuItems(props) {
         {
             text: "Admins",
             icon: <SupervisorAccountIcon />,
-            accessLevel: 1,
+            accessLevel: 2,
             href: "/workflow/admin-users"
         },
         {

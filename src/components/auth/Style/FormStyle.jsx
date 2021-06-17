@@ -197,6 +197,9 @@ const FormStyle = (theme) => ({
 				fontSize: 10,
 			},
 		},
+		'& .MuiOutlinedInput-adornedEnd': {
+			paddingRight: 0,
+		},
 	},
 	dialogContent: {
 		'&:first-child': {
@@ -347,17 +350,20 @@ const FormStyle = (theme) => ({
 		fontSize: 12.5,
 		'& .MuiSvgIcon-root': {
 			fontSize: 20,
-		}
+		},
 	},
 	smallButton: {
 		width: 150,
 		color: defaultTextColor,
 	},
 	moreIcon: {
-		color: defaultTextColor, 
+		color: defaultTextColor,
 		fontSize: 18,
 		marginRight: 5,
 		transform: 'rotate(180deg)',
+	},
+	formControlIcon: {
+		fontSize: '20px !important',
 	},
 });
 
