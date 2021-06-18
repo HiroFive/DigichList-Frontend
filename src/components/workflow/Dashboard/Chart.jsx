@@ -48,16 +48,16 @@ export default class ShowChart extends PureComponent {
 				>
 					<defs>
 						<linearGradient id='colorOv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#8884d8' stopOpacity={0.8} />
-							<stop offset='95%' stopColor='#8884d8' stopOpacity={0.1} />
+							<stop offset='20%' stopColor='#8884d8' stopOpacity={1} />
+							<stop offset='95%' stopColor='#8884d8' stopOpacity={0.3} />
 						</linearGradient>
 						<linearGradient id='colorFv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#707C97' stopOpacity={0.8} />
-							<stop offset='95%' stopColor='#707C97' stopOpacity={0.1} />
+							<stop offset='20%' stopColor='#707C97' stopOpacity={1} />
+							<stop offset='95%' stopColor='#707C97' stopOpacity={0.3} />
 						</linearGradient>
             <linearGradient id='colorSv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#82ca9d' stopOpacity={0.8} />
-							<stop offset='95%' stopColor='#82ca9d' stopOpacity={0.1} />
+							<stop offset='20%' stopColor='#82ca9d' stopOpacity={1} />
+							<stop offset='95%' stopColor='#82ca9d' stopOpacity={0.3} />
 						</linearGradient>
 					</defs>
 					<CartesianGrid strokeDasharray='3 3' />

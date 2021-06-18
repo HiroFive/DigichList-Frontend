@@ -16,12 +16,12 @@ const getMonthsAgeDate = (howLongAgo) => {
 
 const modifyDateInObject = (object) => {
 	const tempObject = Object.assign(object);
-	tempObject.createdAt = new Date(object.createdAt);
+	tempObject.statusChangedAt = new Date(object.statusChangedAt);
 	return tempObject;
 };
 
 const defectDateFilter = (params, range) => {
-	const paramValue = new Date(params.createdAt);
+	const paramValue = new Date(params.statusChangedAt);
 	if (range[0] <= paramValue && range[1] >= paramValue) {
 		return modifyDateInObject(params);
 	}
@@ -95,9 +95,10 @@ export const getWeekData = (data) => {
 		});
 	}
 	data.forEach((params) => {
-		const { createdAt, defectStatus } = params;
+		const { statusChangedAt, defectStatus } = params;
+		console.log(params)
 		weekData.forEach((element) => {
-			if (element.name === dateConverter(createdAt)) {
+			if (element.name === dateConverter(statusChangedAt)) {
 				element = sortDefectByStatus(defectStatus, element);
 			}
 		});

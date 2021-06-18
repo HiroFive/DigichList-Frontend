@@ -87,7 +87,6 @@ class SetTechnician extends React.Component {
                                 <TextField {...params} label="Fixes defect" variant="outlined" />
                             }
                             renderOption={(option) => {
-                                // console.log(option)
                                 return <div>{option.fullName}</div>;
                             }}
                         />

@@ -148,7 +148,6 @@ class RequestTable extends React.Component {
 }
 
 RequestTable.propTypes = {
-	data: PropTypes.array.isRequired,
 	classes: PropTypes.object,
 };
 
