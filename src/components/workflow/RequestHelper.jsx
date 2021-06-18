@@ -130,9 +130,9 @@ export const getMonthsData = (data, howLongAgo = 6) => {
 		});
 	}
 	data.forEach((params) => {
-		const { createdAt, defectStatus } = params;
+		const { statusChangedAt, defectStatus } = params;
 		monthsData.forEach((element) => {
-			if (element.name === months[createdAt.getMonth()]) {
+			if (element.name === months[statusChangedAt.getMonth()]) {
 				element = sortDefectByStatus(defectStatus, element);
 			}
 		});
