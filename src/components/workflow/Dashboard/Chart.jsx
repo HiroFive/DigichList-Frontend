@@ -22,7 +22,6 @@ export default class ShowChart extends PureComponent {
 	}
 	componentDidMount() {
 		this._isMounted = true;
-		// this.setState({sortedData: sortDefectsByWeek(this.props.data) })
 		this.setState({
 			diagramData: getWeekData(sortDefectsByWeek(this.props.data)),
 		});
@@ -32,7 +31,6 @@ export default class ShowChart extends PureComponent {
 	}
 
 	render() {
-		// console.log(this.state.diagramData)
 		return (
 			<ResponsiveContainer className='chart-container'>
 				<AreaChart
@@ -48,16 +46,16 @@ export default class ShowChart extends PureComponent {
 				>
 					<defs>
 						<linearGradient id='colorOv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#8884d8' stopOpacity={1} />
-							<stop offset='95%' stopColor='#8884d8' stopOpacity={0.3} />
+							<stop offset='50%' stopColor='#8884d8' stopOpacity={1} />
+							<stop offset='100%' stopColor='#8884d8' stopOpacity={0.3} />
 						</linearGradient>
 						<linearGradient id='colorFv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#707C97' stopOpacity={1} />
-							<stop offset='95%' stopColor='#707C97' stopOpacity={0.3} />
+							<stop offset='50%' stopColor='#707C97' stopOpacity={1} />
+							<stop offset='100%' stopColor='#707C97' stopOpacity={0.3} />
 						</linearGradient>
-            <linearGradient id='colorSv' x1='0' y1='0' x2='0' y2='1'>
-							<stop offset='20%' stopColor='#82ca9d' stopOpacity={1} />
-							<stop offset='95%' stopColor='#82ca9d' stopOpacity={0.3} />
+						<linearGradient id='colorSv' x1='0' y1='0' x2='0' y2='1'>
+							<stop offset='50%' stopColor='#82ca9d' stopOpacity={1} />
+							<stop offset='100%' stopColor='#82ca9d' stopOpacity={0.3} />
 						</linearGradient>
 					</defs>
 					<CartesianGrid strokeDasharray='3 3' />
@@ -84,8 +82,7 @@ export default class ShowChart extends PureComponent {
 						dataKey='solved'
 						stroke='#82ca9d'
 						fillOpacity={1}
-						fill="url(#colorSv)"
-						// activeDot={{ r: 8 }}
+						fill='url(#colorSv)'
 					/>
 				</AreaChart>
 			</ResponsiveContainer>

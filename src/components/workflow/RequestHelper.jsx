@@ -96,7 +96,6 @@ export const getWeekData = (data) => {
 	}
 	data.forEach((params) => {
 		const { statusChangedAt, defectStatus } = params;
-		console.log(params)
 		weekData.forEach((element) => {
 			if (element.name === dateConverter(statusChangedAt)) {
 				element = sortDefectByStatus(defectStatus, element);
