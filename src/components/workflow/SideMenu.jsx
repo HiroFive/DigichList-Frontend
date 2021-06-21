@@ -20,7 +20,6 @@ import ListMenuItems from "./ListMenuItems";
 //Icons
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
-// import PowerSettingsNewOutlinedIcon from '@material-ui/icons/PowerSettingsNewOutlined';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 
 function SideMenu(props) {

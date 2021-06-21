@@ -24,7 +24,7 @@ class WorkerUsers extends React.Component {
             <Grid container spacing={3}>
                 <Grid item xs={12} md={7} lg={8}>
                     <Paper className={fixedHeightPaper}>
-                        <strong>Employers Users</strong>
+                        <strong>Employees Users</strong>
                         <EmployersTable/>
                     </Paper>
                 </Grid>
@@ -40,5 +40,4 @@ class WorkerUsers extends React.Component {
 
 }
 
-//TODO: #11 add lazy loading on dataGrids
 export default withStyles(WorkflowStyle, { withTheme: true })(WorkerUsers)

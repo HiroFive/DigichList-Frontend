@@ -60,7 +60,6 @@ class EditAdmin extends React.Component {
 								.required('Email is required'),
 						})}
 						onSubmit={async (values) => {
-							console.log(values);
 							await fetch(
 								`https://digichlistbackend.herokuapp.com/api/admin/UpdateAdmin`,
 								{

@@ -10,6 +10,8 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import FormStyle, { FormStyleMake } from '../../auth/Style/FormStyle';
 import { withStyles } from '@material-ui/core/styles';
 
+import { DeleteString } from '../RequestHelper';
+
 import AcceptRequest from './CRUD/AcceptRequest';
 import CustomDialog from '../Dialog/Dialog';
 import RequestToolBar from './RequestToolBar';
@@ -22,9 +24,21 @@ function RequestAction(props) {
 		setOpen(true);
 	};
 
-	const handleDeny = (e) => {
+	const handleDeny = async (e) => {
 		e.preventDefault();
 		console.log(context.row);
+		await fetch(
+			`https://digichlistbackend.herokuapp.com/DeleteUsers${DeleteString(
+				context.row
+			)}`,
+			{
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			}
+		).then((response) => (response.ok === true ? location.reload() : null));
 	};
 
 	return (

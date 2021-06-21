@@ -35,10 +35,10 @@ function ListMenuItems(props) {
             href: "/workflow/admin-users"
         },
         {
-            text: "Employers",
+            text: "Employees",
             icon: <WorkOutlineIcon />,
             accessLevel: 0,
-            href: "/workflow/employers-users"
+            href: "/workflow/employees-users"
         },
         {
             text: "Defects",

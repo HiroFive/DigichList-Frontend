@@ -10,11 +10,6 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import ClearIcon from '@material-ui/icons/Clear';
 import { Adornment } from '../../Dialog/Inputs';
 
 import FormStyle from '../../../auth/Style/FormStyle';
@@ -66,7 +61,6 @@ class AddAdmin extends React.Component {
 						.required('Please confirm your password'),
 				})}
 				onSubmit={async (values) => {
-					console.log(values);
 					await fetch(`https://digichlistbackend.herokuapp.com/api/admin`, {
 						method: 'POST',
 						headers: {
