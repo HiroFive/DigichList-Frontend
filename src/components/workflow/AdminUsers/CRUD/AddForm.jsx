@@ -202,7 +202,7 @@ class AddAdmin extends React.Component {
 											{...formik.getFieldProps('accessLevel')}
 										>
 											{menuItem.map((params, index) => {
-												const { name, id } = params;
+												const { name } = params;
 												return (
 													<MenuItem key={index} value={name}>
 														{name}
