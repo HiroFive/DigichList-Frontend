@@ -18,6 +18,7 @@ import RequestToolBar from './RequestToolBar';
 
 function RequestAction(props) {
 	const { context } = props;
+	const denyData = [context.row];
 	const classes = FormStyleMake();
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => {
@@ -26,10 +27,10 @@ function RequestAction(props) {
 
 	const handleDeny = async (e) => {
 		e.preventDefault();
-		console.log(context.row);
+		console.log(denyData);
 		await fetch(
 			`https://digichlistbackend.herokuapp.com/DeleteUsers${DeleteString(
-				context.row
+				denyData
 			)}`,
 			{
 				method: 'DELETE',
