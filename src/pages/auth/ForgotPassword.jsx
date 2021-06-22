@@ -1,7 +1,7 @@
 import React from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { HelpingText, ResetLink, FormCard } from '../../components/auth/FormElements';
-import FormStyle from '../../components/auth/FormStyle';
+import FormStyle from '../../components/auth/Style/FormStyle';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 

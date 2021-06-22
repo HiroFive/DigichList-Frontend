@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import FormStyle from './FormStyle';
+import FormStyle from './Style/FormStyle';
 
 import PropTypes from 'prop-types';
 

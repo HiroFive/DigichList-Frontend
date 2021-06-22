@@ -2,7 +2,7 @@ import React from 'react';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import { HelpingText, ResetLink, FormCard } from '../../components/auth/FormElements';
 import TextField from '@material-ui/core/TextField';
-import FormStyle from '../../components/auth/FormStyle';
+import FormStyle from '../../components/auth/Style/FormStyle';
 import Button from '@material-ui/core/Button';
 import { Formik } from "formik";
 import * as Yup from "yup";
