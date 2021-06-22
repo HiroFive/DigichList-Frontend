@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
-import { ResetLink, FormCard } from '../../components/auth/FormElements';
+import {FormCard } from '../../components/auth/FormElements';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -19,7 +19,7 @@ import { CssBaseline } from '@material-ui/core';
 const loginForm = (props) => {
     const { login } = useAuth()
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [setLoading] = useState(false)
 
 
     return (
@@ -92,7 +92,7 @@ const loginForm = (props) => {
                                         disableRipple
                                         color='default'
                                         value="remember"
-                                        checkedIcon={<span className={styles.icon, styles.checkedIcon} />}
+                                        checkedIcon={<span className={`${styles.icon} ${styles.checkedIcon}`} />}
                                         icon={<span className={styles.icon} />}
                                     />}
                                     label="Remember me"

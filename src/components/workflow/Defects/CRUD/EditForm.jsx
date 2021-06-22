@@ -57,19 +57,18 @@ class EditForm extends React.Component {
 			.then((reqResponse) => {
 				this.setState({
 					technician: reqResponse.map((params) => {
-						var newObject = {
+						return {
 							id: params.id,
 							fullName: `${params.firstName} ${params.lastName}`,
 							firstName: params.firstName,
 							lastName: params.lastName,
 						};
-						return newObject;
 					}),
 				});
 				this.state.technician.forEach((params) => {
-					params.fullName == this.props.data[0].userThatFixesDefect
-						? this.setState({ fixesDefect: params })
-						: null;
+					if (params.fullName === this.props.data[0].userThatFixesDefect) {
+						this.setState({ fixesDefect: params });
+					}
 				});
 			});
 		this.setState({ loading: false });
@@ -88,7 +87,7 @@ class EditForm extends React.Component {
 				{this.state.data.length < 2 && !this.state.loading ? (
 					<Formik
 						initialValues={{
-                            id: this.state.data[0].id,
+							id: this.state.data[0].id,
 							roomNumber: this.state.data[0].roomNumber,
 							defectStatus: this.state.data[0].defectStatus,
 							publisher: this.state.data[0].publisher,
@@ -106,7 +105,6 @@ class EditForm extends React.Component {
 						})}
 						onSubmit={async (values) => {
 							values.assignedWorkerId = fixesDefect.id;
-							// console.log(fixesDefect);
 							await fetch(
 								`https://digichlistbackend.herokuapp.com/api/defect/UpdateDefect`,
 								{
@@ -115,13 +113,13 @@ class EditForm extends React.Component {
 										'Content-Type': 'application/json',
 										Accept: 'application/json',
 									},
-                                    body: JSON.stringify({
-                                        id: values.id,
-                                        description: values.description,
-                                        roomNumber: values.roomNumber,
-                                        defectStatus: values.defectStatus,
-                                        assignedWorkerId: values.assignedWorkerId,
-                                    }),
+									body: JSON.stringify({
+										id: values.id,
+										description: values.description,
+										roomNumber: values.roomNumber,
+										defectStatus: values.defectStatus,
+										assignedWorkerId: values.assignedWorkerId,
+									}),
 								}
 							).then((response) =>
 								response.ok === true ? location.reload() : null

@@ -98,7 +98,7 @@ export const getWeekData = (data) => {
 		const { statusChangedAt, defectStatus } = params;
 		weekData.forEach((element) => {
 			if (element.name === dateConverter(statusChangedAt)) {
-				element = sortDefectByStatus(defectStatus, element);
+				sortDefectByStatus(defectStatus, element);
 			}
 		});
 	});
@@ -132,7 +132,7 @@ export const getMonthsData = (data, howLongAgo = 6) => {
 		const { statusChangedAt, defectStatus } = params;
 		monthsData.forEach((element) => {
 			if (element.name === months[statusChangedAt.getMonth()]) {
-				element = sortDefectByStatus(defectStatus, element);
+				sortDefectByStatus(defectStatus, element);
 			}
 		});
 	});

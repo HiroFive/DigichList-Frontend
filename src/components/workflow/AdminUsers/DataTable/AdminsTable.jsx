@@ -21,7 +21,6 @@ function RenderSetNewPassword(props) {
 		value: PropTypes.object,
 	};
 	const classes = FormStyleMake();
-	const paramValue = props.value.row.userThatFixesDefect;
 	const [open, setOpen] = React.useState(false);
 
 	const handleOpen = () => {

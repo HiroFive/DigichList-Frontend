@@ -24,7 +24,7 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 
 function SideMenu(props) {
     const [open, setOpen] = React.useState(false);
-    const [body, setBody] = React.useState(props.body);
+    const [body] = React.useState(props.body);
     const classes = WorkflowStyleMake()
     const { logout } = useAuth()
 

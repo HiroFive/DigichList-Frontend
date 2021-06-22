@@ -9,11 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import ClearIcon from '@material-ui/icons/Clear';
 
 import FormStyle from '../../../auth/Style/FormStyle';
 import { withStyles } from '@material-ui/core/styles';
@@ -138,7 +133,7 @@ class EditAdmin extends React.Component {
 													{...formik.getFieldProps('accessLevel')}
 												>
 													{menuItem.map((params, index) => {
-														const { name, id } = params;
+														const { name } = params;
 														return (
 															<MenuItem key={index} value={name}>
 																{name}

@@ -107,43 +107,53 @@ function RenderState(props) {
 	};
 	const classes = FormStyleMake();
 	const paramValue = props.value.row.defectStatus;
-	return (
-		<div>
-			{paramValue == 'Opened' ? (
-				<Chip
-					variant='outlined'
-					size='small'
-					label='Opened'
-					className={classes.opened}
-					icon={<ErrorRoundedIcon />}
-				/>
-			) : paramValue == 'Fixing' ? (
-				<Chip
-					variant='outlined'
-					size='small'
-					label='Fixing'
-					className={classes.fixing}
-					icon={<FiberManualRecordRoundedIcon />}
-				/>
-			) : paramValue == 'Solved' ? (
-				<Chip
-					className={classes.allowed}
-					variant='outlined'
-					size='small'
-					label='Solved'
-					icon={<CheckCircleRoundedIcon />}
-				/>
-			) : (
-				<Chip
-					className={classes.notDefined}
-					variant='outlined'
-					size='small'
-					label='Not Assigned'
-					icon={<AdjustIcon />}
-				/>
-			)}
-		</div>
-	);
+
+
+	const renderSwitch = (params) => {
+		switch (params) {
+			case 'Opened':
+				return (
+					<Chip
+						variant='outlined'
+						size='small'
+						label='Opened'
+						className={classes.opened}
+						icon={<ErrorRoundedIcon />}
+					/>
+				);
+			case 'Fixing':
+				return (
+					<Chip
+						variant='outlined'
+						size='small'
+						label='Fixing'
+						className={classes.fixing}
+						icon={<FiberManualRecordRoundedIcon />}
+					/>
+				);
+			case 'Solved':
+				return (
+					<Chip
+						className={classes.allowed}
+						variant='outlined'
+						size='small'
+						label='Solved'
+						icon={<CheckCircleRoundedIcon />}
+					/>
+				);
+			default:
+				return (
+					<Chip
+						className={classes.notDefined}
+						variant='outlined'
+						size='small'
+						label='Not Assigned'
+						icon={<AdjustIcon />}
+					/>
+				);
+		}
+	};
+	return <div>{renderSwitch(paramValue)}</div>;
 }
 
 const columns = [
@@ -215,7 +225,6 @@ class DefectsTable extends React.Component {
 	}
 
 	render() {
-		// console.log(this.state.rows)
 		const { classes } = this.props;
 		return (
 			<div className={classes.fixedHeightFullSize}>
