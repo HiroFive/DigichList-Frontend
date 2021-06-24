@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
-import FormStyle from './Style/FormStyle';
+import {FormStyleMake} from './Style/FormStyle';
 
 import PropTypes from 'prop-types';
 
@@ -17,7 +17,7 @@ export function SubmitBtn(props) {
     SubmitBtn.propTypes = {
         text: PropTypes.string,
     }
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     return (
         <Button
             className={styles.submitBtn}
@@ -35,7 +35,7 @@ export function HelpingText(props) {
         text: PropTypes.string,
         component: PropTypes.object,
     }
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     return (
         <Typography variant="body2" className={styles.helpText}>
             {props.text}  {props.component}
@@ -48,7 +48,7 @@ export function ResetLink(props) {
         text: PropTypes.string,
         to: PropTypes.string,
     }
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     return (
         <Typography className={styles.resetPassword}>
             <Link to={`/auth${props.to}`}>
@@ -69,7 +69,7 @@ export function FormInput(props) {
         onChange: PropTypes.func,
         onBlur: PropTypes.func,
     }
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     return (
         <TextField
             className={styles.formInput}
@@ -93,7 +93,7 @@ export function FormCard(props) {
         title: PropTypes.string,
         icon: PropTypes.object,
     }
-    const styles = FormStyle();
+    const styles = FormStyleMake();
     return (
         <Container component='main' maxWidth='xs'>
             <Card className={styles.root}>
