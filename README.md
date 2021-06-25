@@ -6,7 +6,7 @@
 
 ### `npm run build`
 
-You mast login if u to wanna try my application
+You must log in if u to want to try my application
 
 email: TestAdmin@gmail.com
 password: 123456
