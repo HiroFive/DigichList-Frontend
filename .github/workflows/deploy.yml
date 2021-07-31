@@ -26,9 +26,8 @@ jobs:
           npm install
 
       - name: FrontEnd Build
-        working-directory: ./frontend
         run: |
-          npm run build
+          npm build
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
