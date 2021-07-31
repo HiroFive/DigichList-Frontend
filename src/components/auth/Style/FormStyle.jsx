@@ -167,6 +167,7 @@ const FormStyle = (theme) => ({
 			background: 'rgba(206,217,224,.5)',
 		},
 	},
+	
 	checkedIcon: {
 		borderRadius: 3.5,
 		backgroundColor: '#0d6efd',
