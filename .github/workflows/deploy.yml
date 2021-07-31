@@ -32,7 +32,6 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: test-digich-list
-          image: gcr.io/cloudrun/test-digich-list
           region: global
           credentials: ${{ secrets.GCP_KEY }}
 
