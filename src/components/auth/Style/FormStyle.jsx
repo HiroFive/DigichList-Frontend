@@ -146,7 +146,6 @@ const FormStyle = (theme) => ({
 			backgroundColor: 'red',
 		},
 	},
-
 	checkBoxLabel: {
 		marginBottom: 6,
 	},
